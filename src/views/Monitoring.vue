@@ -32,9 +32,12 @@
       <DxColumn
         data-field="order_sum"
         caption="Сумма заказа"
-        format="currency"
-        currency="RUB"
-      />
+      >
+        <dx-format
+          type="currency"
+          currency="RUB"
+        />
+      </DxColumn>
       <DxGroupPanel :visible="true"/>
       <DxSearchPanel :visible="true"/>
       <DxGrouping :auto-expand-all="autoExpandAll"/>
@@ -51,11 +54,10 @@ import {
   DxGroupPanel,
   DxSearchPanel,
   DxPaging,
+  DxFormat,
 } from 'devextreme-vue/data-grid';
-
-
-import 'devextreme/localization/globalize/currency';
-
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
 
 export default {
   components: {
@@ -65,11 +67,16 @@ export default {
     DxPaging,
     DxSearchPanel,
     DxDataGrid,
+    DxFormat,
   },
   data() {
     return {
       autoExpandAll: true,
     };
+  },
+  created() {
+    loadMessages(ruMessages);
+    locale('ru');
   },
 };
 </script>
