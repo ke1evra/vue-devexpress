@@ -1,5 +1,4 @@
-import 'devextreme/dist/css/dx.common.css';
-import 'devextreme/dist/css/dx.light.compact.css';
+// import 'devextreme/dist/css/dx.common.css';
 import ruMessages from 'devextreme/localization/messages/ru.json';
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';

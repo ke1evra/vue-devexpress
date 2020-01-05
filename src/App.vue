@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar toggleable="lg" type="light" variant="light">
         <b-navbar-brand href="#">Dolgov</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -12,8 +12,14 @@
             <b-nav-item to="/about" exact exact-active-class="active">About</b-nav-item>
             <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
           </b-navbar-nav>
-
-
+          <b-navbar-nav class="ml-auto">
+            <b-nav-form>
+              <b-form-select v-model="themeHelper.theme" >
+                <option value="light">Светлая</option>
+                <option value="dark">Темная</option>
+              </b-form-select>
+            </b-nav-form>
+          </b-navbar-nav>
         </b-collapse>
       </b-navbar>
     </div>
@@ -21,18 +27,6 @@
       <div class="row">
         <div class="col">
           <router-view/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <p v-if="loading">loading...</p>
-
-          <select v-model="themeHelper.theme">
-            <option v-bind:value="name" v-for="(href, name) of themes" v-bind:key="name">
-              {{ name }}
-            </option>
-          </select>
-          <span>Selected: {{ themeHelper.theme }}</span>
         </div>
       </div>
     </div>
@@ -80,9 +74,11 @@ export default {
   data() {
     return {
       themes: {
-        flatly: 'https://bootswatch.com/4/flatly/bootstrap.min.css',
-        material: 'https://bootswatch.com/4/materia/bootstrap.min.css',
-        solar: 'https://bootswatch.com/4/solar/bootstrap.min.css',
+        // flatly: 'https://bootswatch.com/4/flatly/bootstrap.min.css',
+        // material: 'https://bootswatch.com/4/materia/bootstrap.min.css',
+        // solar: 'https://bootswatch.com/4/solar/bootstrap.min.css',
+        light: '/css/light.css',
+        dark: '/css/dark.css',
       },
       themeHelper: new ThemeHelper(),
       loading: true,
@@ -93,17 +89,20 @@ export default {
     // eslint-disable-next-line max-len
     const added = Object.keys(this.themes).map(name => this.themeHelper.add(name, this.themes[name]));
 
+    // eslint-disable-next-line no-unused-vars
     Promise.all(added).then((sheets) => {
-      console.log(`${sheets.length} themes loaded`);
       this.loading = false;
-      this.themeHelper.theme = 'flatly';
+      this.themeHelper.theme = 'light';
     });
   },
 };
 </script>
 
-<style lang="scss" module="theme-light">
+<style lang="scss">
   /*@import "assets/scss/custom.scss";*/
+  @import '~devextreme/dist/css/dx.common.css';
+  @import '~devextreme/dist/css/dx.light.compact.css';
+  /*@import '~devextreme/dist/css/dx.dark.compact.css';*/
   @import '~bootstrap/scss/bootstrap.scss';
   @import '~bootstrap-vue/src/index.scss';
 </style>
