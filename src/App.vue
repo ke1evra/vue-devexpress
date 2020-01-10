@@ -14,7 +14,7 @@
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
-              <b-form-select v-model="themeHelper.theme" >
+              <b-form-select v-model="themeHelper.theme">
                 <option value="light">Светлая</option>
                 <option value="dark">Темная</option>
               </b-form-select>
@@ -26,11 +26,10 @@
     <div class="container-fluid pt-3">
       <div class="row">
         <div class="col">
-          <router-view/>
+          <router-view />
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -57,16 +56,23 @@ const ThemeHelper = function () {
       throw new Error(`"${name}" has not been defined as a theme.`);
     }
     // eslint-disable-next-line no-param-reassign,no-return-assign
-    Object.keys(themes).forEach(n => themes[n].disabled = (n !== name));
+    Object.keys(themes).forEach(n => (themes[n].disabled = n !== name));
   };
 
   const themes = {};
 
   return {
     // eslint-disable-next-line no-return-assign
-    add(name, href) { return preloadTheme(href).then(s => themes[name] = s); },
-    set theme(name) { selectTheme(themes, name); },
-    get theme() { return Object.keys(themes).find(n => !themes[n].disabled); },
+    add(name, href) {
+      // eslint-disable-next-line no-return-assign
+      return preloadTheme(href).then(s => (themes[name] = s));
+    },
+    set theme(name) {
+      selectTheme(themes, name);
+    },
+    get theme() {
+      return Object.keys(themes).find(n => !themes[n].disabled);
+    },
   };
 };
 
@@ -74,9 +80,6 @@ export default {
   data() {
     return {
       themes: {
-        // flatly: 'https://bootswatch.com/4/flatly/bootstrap.min.css',
-        // material: 'https://bootswatch.com/4/materia/bootstrap.min.css',
-        // solar: 'https://bootswatch.com/4/solar/bootstrap.min.css',
         light: '/css/light.css',
         dark: '/css/dark.css',
       },
@@ -92,19 +95,19 @@ export default {
     // eslint-disable-next-line no-unused-vars
     Promise.all(added).then((sheets) => {
       this.loading = false;
-      this.themeHelper.theme = 'light';
+      this.themeHelper.theme = 'dark';
     });
   },
 };
 </script>
 
 <style lang="scss">
-  /*@import "assets/scss/custom.scss";*/
-  @import '~devextreme/dist/css/dx.common.css';
-  @import '~devextreme/dist/css/dx.light.compact.css';
-  /*@import '~devextreme/dist/css/dx.dark.compact.css';*/
-  @import '~bootstrap/scss/bootstrap.scss';
-  @import '~bootstrap-vue/src/index.scss';
+/*@import "assets/scss/custom.scss";*/
+@import "~devextreme/dist/css/dx.common.css";
+@import "~devextreme/dist/css/dx.light.compact.css";
+/*@import '~devextreme/dist/css/dx.dark.compact.css';*/
+@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-vue/src/index.scss";
 </style>
 
 <!--<style lang="scss" module="theme-dark">-->
