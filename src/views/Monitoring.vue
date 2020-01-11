@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="row pb-1">
+      <div class="col-md-2">
+        <b-form-select v-model="selected" :options="options" v-on:change="setFromDate(selected)">
+        </b-form-select>
+      </div>
+    </div>
     <div class="row pb-3">
       <div class="col">
         <div class="form-inline">
@@ -17,8 +23,11 @@
             v-model="toDate"
             style="width: 120px;"
           />
-          <b-button variant="primary"
-                    v-on:click="setUrl()">Применить</b-button>
+          <b-button
+            variant="primary"
+            v-on:click="setUrl()"
+            v-b-popover.hover="'Применить выбранный диапазон'"
+          >Применить</b-button>
         </div>
       </div>
     </div>
@@ -111,6 +120,11 @@ export default {
       fromDate: moment().format('DDMMYYYY'),
       toDate: moment().format('DDMMYYYY'),
       moment,
+      selected: null,
+      options: [
+        { value: null, text: '-- Выберите диапазон дат --', disabled: true },
+        { value: '01012019', text: '01.01.2019' },
+      ],
     };
   },
   created() {
@@ -121,6 +135,10 @@ export default {
     setUrl() {
       // eslint-disable-next-line no-return-assign
       return this.dataUrl = `http://194.58.98.118:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+    },
+    setFromDate(value) {
+      // eslint-disable-next-line no-return-assign
+      return this.fromDate = value;
     },
   },
 };
