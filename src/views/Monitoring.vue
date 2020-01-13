@@ -15,6 +15,7 @@
             placeholder="DD.MM.YYYY"
             v-model="fromDate"
             style="width: 120px;"
+            v-b-popover.hover.bottom="'Выберите начало периода'"
           />
           <the-mask
             :mask="'##.##.####'"
@@ -22,11 +23,12 @@
             placeholder="DD.MM.YYYY"
             v-model="toDate"
             style="width: 120px;"
+            v-b-popover.hover.bottom="'Выберите конец периода'"
           />
           <b-button
             variant="primary"
             v-on:click="setUrl()"
-            v-b-popover.hover="'Применить выбранный диапазон'"
+            v-b-popover.hover.bottom="'Применить выбранный диапазон'"
           >Применить</b-button>
         </div>
       </div>
