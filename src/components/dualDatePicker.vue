@@ -29,7 +29,14 @@
             variant="primary"
             v-on:click="returnDateRange"
             v-b-popover.hover.bottom="'Применить выбранный диапазон'"
-          >Применить</b-button>
+          >
+            <b-spinner
+              v-if="loading"
+              variant="white"
+              small label="Small Spinner my-auto"
+            >&nbsp;</b-spinner>
+            Применить
+          </b-button>
         </div>
       </div>
     </div>
@@ -42,7 +49,7 @@ import moment from 'moment';
 
 export default {
   name: 'dualDatePicker',
-  props: ['callback'],
+  props: ['callback', 'loading'],
   components: {
     TheMask,
   },
@@ -71,6 +78,58 @@ export default {
               .format('DDMMYYYY'),
           },
           text: 'Вчера',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('day').subtract(1, 'days').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('day').endOf('day').format('DDMMYYYY'),
+          },
+          text: 'Вчера + сегодня',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('day').subtract(2, 'days').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('day').subtract(2, 'days').format('DDMMYYYY'),
+          },
+          text: 'Позавчера',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('week').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('day').endOf('day').format('DDMMYYYY'),
+          },
+          text: 'Текущая неделя',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('week').subtract(1, 'week').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('week').endOf('week').subtract(1, 'week')
+              .format('DDMMYYYY'),
+          },
+          text: 'Прошлая неделя',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('month').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('day').endOf('day').format('DDMMYYYY'),
+          },
+          text: 'Текущий месяц',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('month').subtract(1, 'month').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('month').subtract(1, 'month').endOf('month')
+              .format('DDMMYYYY'),
+          },
+          text: 'Прошлый месяц',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('month').subtract(2, 'month').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('month').subtract(2, 'month').endOf('month')
+              .format('DDMMYYYY'),
+          },
+          text: 'Позапрошлый месяц',
         },
       ],
     };

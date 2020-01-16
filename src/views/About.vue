@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Заказы</h1>
-    <dual-date-picker @change="getData"></dual-date-picker>
-    <orders-table v-bind:dataSource="dataSource"></orders-table>
+    <dual-date-picker @change="getData" v-bind:loading="loading"></dual-date-picker>
+    <orders-table v-bind:dataSource="dataSource" ></orders-table>
   </div>
 </template>
 <script>
@@ -17,14 +17,19 @@ export default {
     return {
       dataSource: null,
       url: null,
+      loading: null,
     };
   },
   methods: {
     getData(url) {
+      this.loading = true;
       axios
         .get(url)
         // eslint-disable-next-line no-return-assign
-        .then(response => (this.dataSource = response.data));
+        .then((response) => {
+          this.loading = false;
+          this.dataSource = response.data;
+        });
     },
   },
 };
