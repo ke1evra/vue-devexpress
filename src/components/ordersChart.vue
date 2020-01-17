@@ -7,13 +7,17 @@
           :data-source="calcData()"
           v-if="calcData()"
         >
+          <DxArgumentAxis
+            tick-interval="day">
+          </DxArgumentAxis>
           <DxSeries
             argument-field="day"
             value-field="count"
             name="My oranges"
             type="bar"
             color="#ffaa66"
-          />
+          >
+          </DxSeries>
         </DxChart>
       </div>
     </div>
@@ -29,13 +33,21 @@
 </template>
 
 <script>
-import { DxChart, DxSeries } from 'devextreme-vue/chart';
+import {
+  DxChart,
+  DxSeries,
+  DxArgumentAxis,
+
+} from 'devextreme-vue/chart';
+import moment from 'moment';
 
 export default {
   name: 'ordersChart',
   components: {
     DxChart,
     DxSeries,
+    DxArgumentAxis,
+
   },
   data() {
     return {
@@ -58,7 +70,7 @@ export default {
           if (!acum[item.created_day]) {
             // eslint-disable-next-line no-param-reassign
             acum[item.created_day] = {
-              day: item.created_day,
+              day: moment(item.created_day).toDate(),
               count: 0,
               sum: 0,
               avg: 0,

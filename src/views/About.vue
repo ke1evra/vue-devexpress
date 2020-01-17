@@ -8,10 +8,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <orders-chart v-bind:dataSource="dataSource"></orders-chart>
       </div>
-      <div class="col-6">
+      <div class="col-12">
       </div>
     </div>
   </div>
