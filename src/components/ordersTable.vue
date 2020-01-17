@@ -5,10 +5,12 @@
       :show-borders="true"
       :allow-column-reordering="true"
       :data-source="dataSource"
+      :hover-state-enabled="true"
     >
       <template #cellTemplate="{ data }">
         <a target="_blank"
            :href="'https://ec-crm.ru/orders/filter_template?orders_numbers='+data.value"
+           :title="'Перейти к заказу №'+ data.value"
         >
           {{data.value}}
         </a>
@@ -90,7 +92,7 @@
           column="order_number"
           summary-type="count"
           show-in-column="month"
-          :customize-text="numberWithCommas"
+          :customize-text="formatCount"
           :show-in-group-footer="false"
           :align-by-column="true"
         />
@@ -99,11 +101,23 @@
           summary-type="sum"
           :show-in-group-footer="false"
           :align-by-column="true"
-          :customize-text="numberWithCommas"
+          :customize-text="formatSum"
+        />
+        <DxGroupItem
+          column="order_sum"
+          summary-type="avg"
+          :show-in-group-footer="false"
+          :align-by-column="true"
+          :customize-text="formatAvg"
         />
         <DxTotalItem
           column="order_number"
           summary-type="count"
+        />
+        <DxTotalItem
+          column="order_sum"
+          summary-type="sum"
+          :customize-text="formatSum"
         />
       </DxSummary>
       <DxSortByGroupSummaryInfo summary-item=""/>
@@ -131,7 +145,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import ruMessages from 'devextreme/localization/messages/ru.json';
 
 const numberWithCommas = (x, text) => {
-  const formatted = x.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return text ? `${text} ${formatted}` : formatted;
 };
 
@@ -160,15 +174,9 @@ export default {
     'dataSource',
   ],
   methods: {
-    numberWithCommas(x) {
-      const text = x.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-      // return {
-      //   count: () => `Кол-во: ${text}`,
-      //   sum: () => (text.length ? `Сумма: ${text}` : ''),
-      //   avg: () => `Средн:: ${text}`,
-      // };
-      return `${text} cd`;
-    },
+    formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
+    formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
+    formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
   },
 };
 </script>
