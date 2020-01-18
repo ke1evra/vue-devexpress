@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="py-3">
     <div class="row">
       <div class="col">
         <DxChart

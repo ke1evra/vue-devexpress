@@ -11,6 +11,7 @@
             <b-nav-item to="/" exact exact-active-class="active">Home</b-nav-item>
             <b-nav-item to="/about" exact exact-active-class="active">About</b-nav-item>
             <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
+            <b-nav-item to="/test" exact exact-active-class="active">Тест</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
