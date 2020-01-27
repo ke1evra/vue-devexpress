@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col-md-1 px-1" v-for="(month, i) of daysByMonth" v-bind:key="month">
+  <div class="row">
+      <div v-for="(month, i) of daysByMonth" v-bind:key="month"
+           v-bind:class="`col-md-1`"
+           >
         <h5>Месяц {{i}}</h5>
         <div class="row mx-0">
           <div class="days-container" v-for="day of month" v-bind:key="day" >
             <span v-bind:class=
-                    "'w-100 rounded d-inline-block text-center ' +
-                    (day.weekDay >5 ? 'text-danger' : 'text-white')"
+                    "'w-100 d-inline-block text-center ' +
+                    (day.weekDay >5 ? 'text-danger' : '')"
             >
               {{day.day}}
             </span>
@@ -15,7 +16,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -25,14 +25,14 @@ export default {
   name: 'Test',
   data() {
     return {
-      daysArray: this.buildCalendar('01-01-2020', '12-31-2020'),
+      daysArray: this.buildDaysArray('01-01-2020', '12-31-2020'),
       daysByMonth: this.buildDaysByMonth(this.daysArray),
       today: moment().format('DD-MM-YYYY'),
       startOfYear: moment().startOf('year').format('DD-MM-YYYY'),
     };
   },
   methods: {
-    buildCalendar(start, end) {
+    buildDaysArray(start, end) {
       const returnArray = [];
       const endDate = moment(end).toDate();
       let startDate = moment(start).startOf('year').toDate();
@@ -52,12 +52,10 @@ export default {
     },
     buildDaysByMonth(daysArray) {
       return daysArray.reduce((accum, current) => {
-        // console.log(current);
         if (!accum[current.month]) {
           // eslint-disable-next-line no-param-reassign
           accum[current.month] = [];
         }
-        // eslint-disable-next-line eqeqeq
         if (current.day < 2 && current.weekDay > 1) {
           console.log(current.day, current.weekDay);
           let offset = current.weekDay;
@@ -75,11 +73,13 @@ export default {
 };
 </script>
 
-<style scoped>
-  .days-container{
-    width: 13%;
-    font-size: 12px;
-    margin-right: 1px;
-    margin-bottom: 1px;
-  }
+<style scoped lang="sass">
+  .days-container
+    width: 13%
+    font-size: 12px
+    margin-right: 1px
+    margin-bottom: 1px
+    :hover
+      background-color: #aaa
+      cursor: pointer
 </style>
