@@ -95,15 +95,15 @@ export default {
         },
         {
           value: {
-            from: moment(new Date()).startOf('week').format('DDMMYYYY'),
+            from: moment(new Date()).startOf('isoWeek').format('DDMMYYYY'),
             to: moment(new Date()).startOf('day').endOf('day').format('DDMMYYYY'),
           },
           text: 'Текущая неделя',
         },
         {
           value: {
-            from: moment(new Date()).startOf('week').subtract(1, 'week').format('DDMMYYYY'),
-            to: moment(new Date()).startOf('week').endOf('week').subtract(1, 'week')
+            from: moment(new Date()).startOf('isoWeek').subtract(1, 'week').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('isoWeek').endOf('isoWeek').subtract(1, 'week')
               .format('DDMMYYYY'),
           },
           text: 'Прошлая неделя',

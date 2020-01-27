@@ -1,34 +1,45 @@
 <template>
-  <div class="py-3">
-    <div class="row">
-      <div class="col">
-        <DxChart
-          id="chart"
-          :data-source="calcData()"
-          v-if="calcData()"
+  <div class="pt-3">
+    {{width}}
+    <DxChart
+      class="w-100"
+      :data-source="calcData()"
+    >
+      <DxCommonSeriesSettings>
+        <DxLabel
+          visible="true"
+          alignment="center"
+          position="inside"
         >
-          <DxArgumentAxis
-            tick-interval="day">
-          </DxArgumentAxis>
-          <DxSeries
-            argument-field="day"
-            value-field="count"
-            name="My oranges"
-            type="bar"
-            color="#ffaa66"
-          >
-          </DxSeries>
-        </DxChart>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">
-          <h3>Компонент ordersChart</h3>
-          <p>{{calcData()}}</p>
-        </div>
-      </div>
-    </div>
+        </DxLabel>
+      </DxCommonSeriesSettings>
+      <DxArgumentAxis
+        tick-interval="day">
+      </DxArgumentAxis>
+      <DxSeries
+        argument-field="day"
+        value-field="count"
+        type="stackedBar"
+        color="#ffaa66"
+        name="Заказы"
+      >
+      </DxSeries>
+      <DxLegend
+        verticalAlignment="bottom"
+        horizontalAlignment="center"
+        itemTextPosition="right"
+      >
+      </DxLegend>
+    </DxChart>
+
+<!--    <div class="row">-->
+<!--      <div class="col">-->
+<!--        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">-->
+<!--          <h3>Компонент ordersChart</h3>-->
+<!--          <p>{{calcData()}}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -37,6 +48,9 @@ import {
   DxChart,
   DxSeries,
   DxArgumentAxis,
+  DxLegend,
+  DxCommonSeriesSettings,
+  DxLabel,
 
 } from 'devextreme-vue/chart';
 import moment from 'moment';
@@ -47,16 +61,22 @@ export default {
     DxChart,
     DxSeries,
     DxArgumentAxis,
-
+    DxLegend,
+    DxCommonSeriesSettings,
+    DxLabel,
   },
   data() {
     return {
       dataArray: [],
+      width: 1,
     };
   },
   props: [
     'dataSource',
   ],
+  mounted() {
+    this.width = this.$refs.app.clientWidth;
+  },
   methods: {
     calc() {
       this.dataSource.map(
