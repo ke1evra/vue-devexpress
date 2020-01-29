@@ -5,7 +5,9 @@
       class="w-100"
       :data-source="calcData()"
     >
-      <DxCommonSeriesSettings>
+      <DxCommonSeriesSettings
+        max-label-count="50"
+      >
         <DxLabel
           visible="true"
           alignment="center"
@@ -123,18 +125,18 @@
       </DxCrosshair>
     </DxChart>
 
-<!--    <div class="row">-->
-<!--      <div class="col">-->
-<!--        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">-->
-<!--          <h3>JSON.stringify(dataSource[0], null, 4</h3>-->
-<!--          <p>{{JSON.stringify(dataSource[0], null, 4)}}</p>-->
-<!--          <h3>calcSeries(dataSource)</h3>-->
-<!--          <p>{{calcSeries(dataSource)}}</p>-->
-<!--          <h3>calcData()</h3>-->
-<!--          <p>{{calcData()}}</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="row">
+      <div class="col">
+        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">
+          <h3>JSON.stringify(dataSource[0], null, 4</h3>
+          <p>{{JSON.stringify(dataSource[0], null, 4)}}</p>
+          <h3>calcSeries(dataSource)</h3>
+          <p>{{calcSeries(dataSource)}}</p>
+          <h3>calcData()</h3>
+          <p>{{calcData()}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -152,6 +154,8 @@ import {
   DxTitle,
   DxCrosshair,
   DxFont,
+  // DxPoint,
+  // DxPointBorder,
 
 } from 'devextreme-vue/chart';
 
@@ -181,6 +185,8 @@ export default {
     DxTitle,
     DxCrosshair,
     DxFont,
+    // DxPoint,
+    // DxPointBorder,
   },
   data() {
     return {
@@ -226,27 +232,29 @@ export default {
     calcData() {
       const calculatedData = this.dataSource.reduce(
         (acum, item) => {
-          if (!acum[item.created_day]) {
+          if (item.otkaz_cause_id !== 8) {
+            if (!acum[item.created_day]) {
+              // eslint-disable-next-line no-param-reassign
+              acum[item.created_day] = {
+                day: moment(item.created_day).toDate(),
+                count: 0,
+                sum: 0,
+                avg: 0,
+              };
+            }
+            if (!acum[item.created_day][item.order_status_title]) {
+              // eslint-disable-next-line no-param-reassign
+              acum[item.created_day][item.order_status_title] = 0;
+            }
+            // eslint-disable-next-line no-param-reassign,no-plusplus
+            acum[item.created_day][item.order_status_title]++;
             // eslint-disable-next-line no-param-reassign
-            acum[item.created_day] = {
-              day: moment(item.created_day).toDate(),
-              count: 0,
-              sum: 0,
-              avg: 0,
-            };
-          }
-          if (!acum[item.created_day][item.order_status_title]) {
+            acum[item.created_day].count += 1;
             // eslint-disable-next-line no-param-reassign
-            acum[item.created_day][item.order_status_title] = 0;
+            acum[item.created_day].sum += item.order_sum;
+            // eslint-disable-next-line no-param-reassign,max-len
+            acum[item.created_day].avg = Math.round(acum[item.created_day].sum / acum[item.created_day].count);
           }
-          // eslint-disable-next-line no-param-reassign,no-plusplus
-          acum[item.created_day][item.order_status_title]++;
-          // eslint-disable-next-line no-param-reassign
-          acum[item.created_day].count += 1;
-          // eslint-disable-next-line no-param-reassign
-          acum[item.created_day].sum += item.order_sum;
-          // eslint-disable-next-line no-param-reassign,max-len
-          acum[item.created_day].avg = Math.round(acum[item.created_day].sum / acum[item.created_day].count);
           return acum;
         }, {},
       );
@@ -283,6 +291,9 @@ export default {
     custimizeTitleThousands({ valueText }) {
       return `${numberWithCommas(Math.round(valueText / 1000))} к`;
     },
+    customizeTooltipLabel({ valueText }) {
+      return valueText * 1 > 1 ? `${numberWithCommas(valueText)}` : `${Math.round(valueText * 1 / 100)}`;
+    },
   },
 };
 </script>
@@ -290,7 +301,7 @@ export default {
 <style>
   #orderChart{
     width: 100%;
-    height: 600px;
+    height: 900px;
   }
 
   .tooltip-header {

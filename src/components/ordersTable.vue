@@ -7,6 +7,17 @@
       :data-source="dataSource"
       :hover-state-enabled="true"
     >
+      <DxFilterRow
+        :visible="true"
+      />
+      <DxHeaderFilter
+        :visible="true"
+      />
+      <DxSearchPanel
+        :visible="true"
+        :width="240"
+        placeholder="Search..."
+      />
       <template #cellTemplate="{ data }">
         <a target="_blank"
            :href="'https://ec-crm.ru/orders/filter_template?orders_numbers='+data.value"
@@ -139,6 +150,8 @@ import {
   DxGroupItem,
   DxSortByGroupSummaryInfo,
   DxTotalItem,
+  DxFilterRow,
+  DxHeaderFilter,
 
 } from 'devextreme-vue/data-grid';
 import { locale, loadMessages } from 'devextreme/localization';
@@ -164,6 +177,8 @@ export default {
     DxGroupItem,
     DxSortByGroupSummaryInfo,
     DxTotalItem,
+    DxFilterRow,
+    DxHeaderFilter,
 
   },
   created() {
