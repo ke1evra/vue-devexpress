@@ -232,7 +232,7 @@ export default {
     calcData() {
       const calculatedData = this.dataSource.reduce(
         (acum, item) => {
-          if (item.otkaz_cause_id !== 8) {
+          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3) {
             if (!acum[item.created_day]) {
               // eslint-disable-next-line no-param-reassign
               acum[item.created_day] = {
