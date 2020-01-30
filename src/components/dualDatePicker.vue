@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       dataUrl: null,
-      dataUrlTemp: 'http://194.58.98.118:3000/orders?date_from=2020-01-03 00:00:00&date_to=2020-01-03 23:59:59',
+      dataUrlTemp: 'http://185.176.25.157:3000/orders?date_from=2020-01-03 00:00:00&date_to=2020-01-03 23:59:59',
       autoExpandAll: true,
       fromDate: moment().format('DDMMYYYY'),
       toDate: moment().format('DDMMYYYY'),
@@ -131,13 +131,36 @@ export default {
           },
           text: 'Позапрошлый месяц',
         },
+        {
+          value: {
+            from: moment(new Date()).startOf('year').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('day').endOf('day').format('DDMMYYYY'),
+          },
+          text: 'Текущий год',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('year').subtract(1, 'year').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('year').subtract(1, 'year').endOf('year')
+              .format('DDMMYYYY'),
+          },
+          text: 'Прошлый год',
+        },
+        {
+          value: {
+            from: moment(new Date()).startOf('year').subtract(2, 'year').format('DDMMYYYY'),
+            to: moment(new Date()).startOf('year').subtract(2, 'year').endOf('year')
+              .format('DDMMYYYY'),
+          },
+          text: 'Позапрошлый год',
+        },
       ],
     };
   },
   methods: {
     setUrl() {
       // eslint-disable-next-line no-return-assign
-      return this.dataUrl = `http://194.58.98.118:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+      return this.dataUrl = `http://185.176.25.157:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
     },
     setDateRange(value) {
       // eslint-disable-next-line no-return-assign
@@ -145,7 +168,7 @@ export default {
       this.toDate = value.to;
     },
     returnDateRange() {
-      const url = `http://194.58.98.118:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+      const url = `http://185.176.25.157:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
       this.$emit('change', url);
     },
   },

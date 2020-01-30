@@ -2,7 +2,6 @@
   <div class="pt-3">
     <DxChart
       id="orderChart"
-      class="w-100"
       :data-source="calcData()"
     >
       <DxCommonSeriesSettings
@@ -16,6 +15,12 @@
           background-color="none"
         >
         </DxLabel>
+        <DxPoint :visible="false">
+          <DxPointHoverStyle
+            visible="true"
+            size="10"
+          />
+        </DxPoint>
       </DxCommonSeriesSettings>
       <DxArgumentAxis
         tick-interval="day">
@@ -38,7 +43,7 @@
         argument-field="day"
         value-field="count"
         type="bar"
-        color="#ffaa66"
+        color="#03beca"
         name="Кол-во звявок"
         axis="count"
         pane="bottomPane"
@@ -54,6 +59,7 @@
         name="Средний чек"
         axis="avg"
         pane="topPane"
+        color="#015d00"
       >
         <DxLabel
           :visible="false"
@@ -66,6 +72,7 @@
         name="Сумма заявок"
         axis="sum"
         pane="topPane"
+        color="#c42034"
       >
         <DxLabel
           :visible="false"
@@ -92,6 +99,12 @@
       </DxValueAxis>
       <DxLegend
         verticalAlignment="bottom"
+        horizontalAlignment="center"
+        itemTextPosition="right"
+      >
+      </DxLegend>
+      <DxLegend
+        verticalAlignment="top"
         horizontalAlignment="center"
         itemTextPosition="right"
       >
@@ -125,18 +138,18 @@
       </DxCrosshair>
     </DxChart>
 
-    <div class="row">
-      <div class="col">
-        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">
-          <h3>JSON.stringify(dataSource[0], null, 4</h3>
-          <p>{{JSON.stringify(dataSource[0], null, 4)}}</p>
-          <h3>calcSeries(dataSource)</h3>
-          <p>{{calcSeries(dataSource)}}</p>
-          <h3>calcData()</h3>
-          <p>{{calcData()}}</p>
-        </div>
-      </div>
-    </div>
+<!--    <div class="row">-->
+<!--      <div class="col">-->
+<!--        <div class="bg-info text-white px-3 py-1 my-1 rounded" v-if="dataSource">-->
+<!--          <h3>JSON.stringify(dataSource[0], null, 4</h3>-->
+<!--          <p>{{JSON.stringify(dataSource[0], null, 4)}}</p>-->
+<!--          <h3>calcSeries(dataSource)</h3>-->
+<!--          <p>{{calcSeries(dataSource)}}</p>-->
+<!--          <h3>calcData()</h3>-->
+<!--          <p>{{calcData()}}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -154,7 +167,8 @@ import {
   DxTitle,
   DxCrosshair,
   DxFont,
-  // DxPoint,
+  DxPoint,
+  DxPointHoverStyle,
   // DxPointBorder,
 
 } from 'devextreme-vue/chart';
@@ -185,7 +199,8 @@ export default {
     DxTitle,
     DxCrosshair,
     DxFont,
-    // DxPoint,
+    DxPoint,
+    DxPointHoverStyle,
     // DxPointBorder,
   },
   data() {
@@ -232,7 +247,7 @@ export default {
     calcData() {
       const calculatedData = this.dataSource.reduce(
         (acum, item) => {
-          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3) {
+          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_id === 1) {
             if (!acum[item.created_day]) {
               // eslint-disable-next-line no-param-reassign
               acum[item.created_day] = {
