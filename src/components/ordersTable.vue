@@ -7,6 +7,10 @@
       :data-source="dataSource"
       :hover-state-enabled="true"
     >
+      <DxExport
+        :enabled="true"
+        :allow-export-selected-data="true"
+      />
       <DxFilterRow
         :visible="true"
       />
@@ -152,6 +156,7 @@ import {
   DxTotalItem,
   DxFilterRow,
   DxHeaderFilter,
+  DxExport,
 
 } from 'devextreme-vue/data-grid';
 import { locale, loadMessages } from 'devextreme/localization';
@@ -179,6 +184,7 @@ export default {
     DxTotalItem,
     DxFilterRow,
     DxHeaderFilter,
+    DxExport,
 
   },
   created() {

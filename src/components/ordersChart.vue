@@ -4,6 +4,10 @@
       id="orderChart"
       :data-source="calcData()"
     >
+      <DxExport
+        :enabled="true"
+        :allow-export-selected-data="true"
+      />
       <DxCommonSeriesSettings
         max-label-count="50"
       >
@@ -34,6 +38,7 @@
         :name="series.name"
         :color="series.color"
         pane="midPane"
+        formar="percent"
       >
         <DxLabel
           :visible="true"
@@ -169,6 +174,7 @@ import {
   DxFont,
   DxPoint,
   DxPointHoverStyle,
+  DxExport,
   // DxPointBorder,
 
 } from 'devextreme-vue/chart';
@@ -201,6 +207,7 @@ export default {
     DxFont,
     DxPoint,
     DxPointHoverStyle,
+    DxExport,
     // DxPointBorder,
   },
   data() {
