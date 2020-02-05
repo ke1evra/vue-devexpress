@@ -9,15 +9,15 @@
       <div class="row">
         <div class="col-4 py-5" v-html="textFromObject(data[0])">
         </div>
-        <div class="col-4 py-5" v-html="textFromObject(data[1])">
+        <div class="col-4 py-5" v-html="textFromObject(data[63])">
         </div>
-        <div class="col-4 py-5" v-html="textFromObject(data[2])">
+        <div class="col-4 py-5" v-html="textFromObject(data[180])">
         </div>
-        <div class="col-4 py-5" v-html="textFromObject(data[3])">
+        <div class="col-4 py-5" v-html="textFromObject(data[120])">
         </div>
-        <div class="col-4 py-5" v-html="textFromObject(data[4])">
+        <div class="col-4 py-5" v-html="textFromObject(data[499])">
         </div>
-        <div class="col-4 py-5" v-html="textFromObject(data[5])">
+        <div class="col-4 py-5" v-html="textFromObject(data[315])">
         </div>
         <div class="col-4 py-5" v-html="textFromObject(data[410])">
         </div>
@@ -73,7 +73,7 @@ export default {
         insertPropWithText(`${item['shirina-(sm)'] * 10}х${item['vysota-(sm)'] * 10}х${item['tolshhina-(mm)']} мм`, 'Габаритные размеры'),
       ]);
       return `
-      Delinia ID **${item['polnoe-naimenovanie-tovara-dlya-klienta']}**
+      **${item['polnoe-naimenovanie-tovara-dlya-klienta']}**
       ${insertProp(item['samostoyatelnaya-sborka'])}
       Основной материал - ${insertProp(item['osnovnoj-material'])}.
       ${insertProp(item['pokrytie-vnutrennej-poverxnosti'])}
