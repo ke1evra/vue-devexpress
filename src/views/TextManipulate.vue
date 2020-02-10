@@ -70,16 +70,24 @@ export default {
         insertPropWithText(item.effekt, 'Эффект'),
         insertPropWithText(item['tip-drevesiny'], 'Тип древесины'),
         insertPropWithText(item['krepezh-v-komplekte'], 'Крепеж в комплекте'),
+      ]);
+      const props2 = concatProps([
+        insertPropWithText(item['strana-proizvodstva'], 'Страна производства'),
         insertPropWithText(`${item['shirina-(sm)'] * 10}х${item['vysota-(sm)'] * 10}х${item['tolshhina-(mm)']} мм`, 'Габаритные размеры'),
       ]);
+
       return `
+      ### [ВЫБЕРИТЕ И СПРОЕКТИРУЙТЕ КУХНЮ](https://leroymerlin.ru/proekt-kuhni/)
       **${item['polnoe-naimenovanie-tovara-dlya-klienta']}**
+      ${item['polnoe-naimenovanie-tovara-dlya-klienta'].toString().toLowerCase().includes('фальшпанель') ? ' — декоративная панель для отделки кухонного гарнитура.' : ''}
+      ${item['polnoe-naimenovanie-tovara-dlya-klienta'].toString().toLowerCase().includes('дверь') ? ' защищает содержимое шкафов от пыли, задает внешний вид кухонного гарнитура.' : ''}
+      ${item['polnoe-naimenovanie-tovara-dlya-klienta'].toString().toLowerCase().includes('угол') ? ' — важная составная часть кухонного гарнитура.' : ''}
       ${insertProp(item['samostoyatelnaya-sborka'])}
       Основной материал - ${insertProp(item['osnovnoj-material'])}.
       ${insertProp(item['pokrytie-vnutrennej-poverxnosti'])}
       ${insertProp(item['sootvetstvie-vnutrennej-storone'])}
       ${insertProp(item['predvaritelnoe-sverlenie-fasada'])}
-      ${insertPropWithText(item['strana-proizvodstva'], 'Страна производства')}.
+      Delinia — это новая коллекция кухонь Леруа Мерлен. Все товары проходят строгую проверку качества на соответствие стандартам. Это гарантирует прочность и долговечность вашего кухонного гарнитура.
       <br/>
       <br/>
       Советы по обслуживанию: ${insertProp(item['sovety-po-obsluzhivaniyu'])}
@@ -89,6 +97,13 @@ export default {
       <br/>
       <br/>
       ${props}
+      <br/>
+      ### Основные параметры:
+      <br/>
+      <br/>
+      ${props2}
+      <br/>
+      ${insertProp(item['tip-produkta'])} Delinia ID — одна из составных деталей кухонного гарнитура. Не является самостоятельным продуктом. Петли и ручки в комплект не входят. Для составления полного проекта кухни рекомендуем проконсультироваться с экспертом в гипермаркете «Леруа Мерлен». В торговом зале вы увидите реальный цвет, сможете оценить качество, сравнить разные модели, спроектировать кухню, а также подобрать дополнительные элементы к ней. На любые вопросы вам ответят опытные консультанты. Также перед визитом в магазин вы можете воспользоваться нашим онлайн-конструктором и составить предварительный проект своей кухни. Создайте кухню мечты вместе с «Леруа Мерлен»!
       `;
     },
   },
