@@ -49,7 +49,7 @@ import moment from 'moment';
 
 export default {
   name: 'dualDatePicker',
-  props: ['callback', 'loading'],
+  props: ['callback', 'loading', 'urltype'],
   components: {
     TheMask,
   },
@@ -168,8 +168,13 @@ export default {
       this.toDate = value.to;
     },
     returnDateRange() {
-      const url = `http://185.176.25.157:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
-      this.$emit('change', url);
+      const url = (uri = 'orders') => `http://185.176.25.157:3000/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+      if (this.urltype === 'calls') {
+        this.$emit('change', url('calls/range'));
+        console.log(url('calls/range'));
+      } else {
+        this.$emit('change', url());
+      }
     },
   },
 };
