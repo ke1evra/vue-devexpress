@@ -7,6 +7,7 @@
       :data-source="dataSource"
       :hover-state-enabled="true"
     >
+      <DxSelection mode="single"/>
       <DxExport
         :enabled="true"
         :allow-export-selected-data="true"
@@ -136,11 +137,21 @@
         />
       </DxSummary>
       <DxSortByGroupSummaryInfo summary-item=""/>
+      <DxMasterDetail
+        :enabled="true"
+        template="masterDetailTemplate"
+      />
+      <template #masterDetailTemplate="client">
+        <detail-template
+          :client="client.data.data.phone_key"
+        />
+      </template>
     </DxDataGrid>
   </div>
 </template>
 
 <script>
+// import axios from 'axios';
 import {
   DxDataGrid,
   DxColumn,
@@ -157,10 +168,14 @@ import {
   DxFilterRow,
   DxHeaderFilter,
   DxExport,
+  DxMasterDetail,
+  DxSelection,
 
 } from 'devextreme-vue/data-grid';
 import { locale, loadMessages } from 'devextreme/localization';
 import ruMessages from 'devextreme/localization/messages/ru.json';
+import DetailTemplate from './DetailTemplate.vue';
+
 
 const numberWithCommas = (x, text) => {
   const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -170,6 +185,7 @@ const numberWithCommas = (x, text) => {
 export default {
   name: 'ordersTable',
   components: {
+    DetailTemplate,
     DxColumn,
     DxGroupPanel,
     DxGrouping,
@@ -185,6 +201,8 @@ export default {
     DxFilterRow,
     DxHeaderFilter,
     DxExport,
+    DxMasterDetail,
+    DxSelection,
 
   },
   created() {
