@@ -49,7 +49,7 @@ import moment from 'moment';
 
 export default {
   name: 'dualDatePicker',
-  props: ['callback', 'loading', 'urltype'],
+  props: ['callback', 'loading', 'urltype', 'from', 'to'],
   components: {
     TheMask,
   },
@@ -175,6 +175,10 @@ export default {
       } else {
         this.$emit('change', url());
       }
+      this.$emit('range', {
+        from: this.fromDate,
+        to: this.toDate,
+      });
     },
   },
 };
