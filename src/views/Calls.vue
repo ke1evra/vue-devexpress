@@ -20,7 +20,6 @@
     <div class="row">
       <div class="col">
         <calls-by-day-chart v-bind:dataSourceUrl="dataSourceUrl"/>
-        {{dataSourceUrl}}
       </div>
     </div>
   </div>

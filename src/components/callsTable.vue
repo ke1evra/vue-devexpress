@@ -6,7 +6,7 @@
       :allow-column-reordering="true"
       :data-source="dataSource"
       :hover-state-enabled="true"
-    >
+      >
       <DxExport
         :enabled="true"
         :allow-export-selected-data="true"
@@ -22,75 +22,6 @@
         :width="240"
         placeholder="Search..."
       />
-<!--      <template #cellTemplate="{ data }">-->
-<!--        <a target="_blank"-->
-<!--           :href="'https://ec-crm.ru/orders/filter_template?orders_numbers='+data.value"-->
-<!--           :title="'Перейти к заказу №'+ data.value"-->
-<!--        >-->
-<!--          {{data.value}}-->
-<!--        </a>-->
-<!--      </template>-->
-<!--      <DxColumn-->
-<!--        data-field="order_number"-->
-<!--        caption="Номер заказа"-->
-<!--        cell-template="cellTemplate"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        name="month"-->
-<!--        data-field="month"-->
-<!--        caption="Месяц"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="created_day"-->
-<!--        caption="День"-->
-<!--        sort-order="desc"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="created_time"-->
-<!--        caption="День"-->
-<!--        sort-order="desc"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="name"-->
-<!--        caption="Менеджер"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="shop_title"-->
-<!--        caption="Магазин"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="order_status_title"-->
-<!--        caption="Статус"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="otkaz_title"-->
-<!--        caption="Причина отказа"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="email"-->
-<!--        caption="Емейл"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="phone_key"-->
-<!--        caption="Телефон"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="courier"-->
-<!--        caption="Курьер"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="samovivoz"-->
-<!--        caption="Самовывоз"-->
-<!--      />-->
-<!--      <DxColumn-->
-<!--        data-field="order_sum"-->
-<!--        caption="Сумма заказа"-->
-<!--      >-->
-<!--        <dx-format-->
-<!--          type="currency"-->
-<!--          currency="RUB"-->
-<!--        />-->
-<!--      </DxColumn>-->
       <DxGroupPanel :visible="true"/>
       <DxSearchPanel :visible="true"/>
       <DxGrouping
@@ -136,14 +67,44 @@
 <!--        />-->
 <!--      </DxSummary>-->
 <!--      <DxSortByGroupSummaryInfo summary-item=""/>-->
+      <template #dataRowTemplate="rowInfo">
+        <tbody
+          class="dx-row"
+        >
+        <tr class="main-row">
+          <td v-bind:key="col"
+              v-for="col in rowInfo.data.data"
+              :style="`background-color: ${tooltipColors[rowInfo.data.data.call_type]}`"
+          >{{col}}</td>
+        </tr>
+        </tbody>
+      </template>
+      <DxColumn
+        v-for="col in columns"
+        v-bind:key="col"
+        :cell-template="col.cellTemplate"
+        :data-field="col.dataField"
+        :caption="col.caption"
+      ></DxColumn>
+<!--      <DxColumn-->
+<!--        cell-template="cellTemplate"-->
+<!--        data-field="call_type"-->
+<!--      ></DxColumn>-->
+      <template #cellTemplate="cell">
+        <div>
+          <span :style="`color: ${tooltipColors[cell.data.value]}`"
+          >&#9679;</span>&nbsp;{{cell.data.value}}
+        </div>
+      </template>
     </DxDataGrid>
   </div>
 </template>
 
 <script>
+import TimeFormat from 'hh-mm-ss';
 import {
   DxDataGrid,
-  // DxColumn,
+  DxColumn,
   DxGrouping,
   DxGroupPanel,
   DxSearchPanel,
@@ -166,11 +127,87 @@ const numberWithCommas = (x, text) => {
   const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return text ? `${text} ${formatted}` : formatted;
 };
+const formatSecondsAsHHMMSS = (e, text) => {
+  let format = 'hh:mm:ss';
+  if (e.value > 3600) {
+    format = 'hh:mm:ss';
+  } else {
+    format = 'mm:ss';
+  }
+  let returnString = '';
+  if (e.value > 0) {
+    returnString = `${text ? `${text}: ` : ''}${TimeFormat.fromS(Math.round(e.value), format)}`;
+  }
+  return returnString;
+};
 
 export default {
   name: 'ordersTable',
+  data() {
+    return {
+      // tooltipColors: {
+      //   Входящий: 'rgba(151, 201, 92, 0.3)',
+      //   Исходящий: 'rgba(30, 178, 245, 0.3)',
+      //   Недозвон: 'rgba(245, 127, 33, 0.3)',
+      //   Пропущенный: 'rgba(245, 86, 74, 0.3)',
+      // },
+      tooltipColors: {
+        Входящий: '#97c95c',
+        Исходящий: '#1db2f5',
+        Недозвон: '#f57f21',
+        Пропущенный: '#f5564a',
+      },
+      columns: [
+        {
+          dataField: 'start_day',
+          caption: 'День',
+          // groupIndex: 0,
+          sortOrder: 'desc',
+        }, {
+          dataField: 'start_time',
+          caption: 'Начало звонка',
+          // groupIndex: 0
+        }, {
+          dataField: 'answer_time',
+          caption: 'Скорость ответа',
+          // groupIndex: 0
+        }, {
+          dataField: 'call_duration',
+          caption: 'Длительность',
+          customizeText(e) {
+            return formatSecondsAsHHMMSS(e);
+          },
+          // groupIndex: 0
+        }, {
+          dataField: 'fail_time',
+          caption: 'Длительность дозвона',
+          // groupIndex: 0
+        }, {
+          dataField: 'call_type',
+          caption: 'Тип звонка',
+          groupIndex: 1,
+          cellTemplate: 'cellTemplate',
+        }, {
+          dataField: 'person',
+          caption: 'Сотрудник',
+          groupIndex: 2,
+        }, {
+          dataField: 'client',
+          caption: 'Клиент',
+          // groupIndex: 0
+        }, {
+          dataField: 'line_number',
+          caption: 'Линия',
+          // groupIndex: 0
+        }, {
+          dataField: 'records',
+          caption: 'Записи',
+          // groupIndex: 0
+        }],
+    };
+  },
   components: {
-    // DxColumn,
+    DxColumn,
     DxGroupPanel,
     DxGrouping,
     DxPaging,
