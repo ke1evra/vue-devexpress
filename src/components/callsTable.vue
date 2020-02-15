@@ -86,14 +86,10 @@
         :data-field="col.dataField"
         :caption="col.caption"
       ></DxColumn>
-<!--      <DxColumn-->
-<!--        cell-template="cellTemplate"-->
-<!--        data-field="call_type"-->
-<!--      ></DxColumn>-->
       <template #cellTemplate="cell">
         <div>
           <span :style="`color: ${tooltipColors[cell.data.value]}`"
-          >&#9679;</span>&nbsp;{{cell.data.value}}
+          >{{cell.data.value}}</span>
         </div>
       </template>
     </DxDataGrid>

@@ -23,7 +23,7 @@
         :width="240"
         placeholder="Search..."
       />
-      <template #cellTemplate="{ data }">
+      <template #cellTemplateOrderNumber="{ data }">
         <a target="_blank"
            :href="'https://ec-crm.ru/orders/filter_template?orders_numbers='+data.value"
            :title="'Перейти к заказу №'+ data.value"
@@ -34,7 +34,7 @@
       <DxColumn
         data-field="order_number"
         caption="Номер заказа"
-        cell-template="cellTemplate"
+        cell-template="cellTemplateOrderNumber"
       />
       <DxColumn
         name="month"
@@ -62,7 +62,14 @@
       <DxColumn
         data-field="order_status_title"
         caption="Статус"
+        cell-template="cellTemplate"
       />
+      <template #cellTemplate="cell">
+        <div>
+          <span :style="`color: ${orderColors[cell.data.value]}`"
+          >{{cell.data.value}}</span>
+        </div>
+      </template>
       <DxColumn
         data-field="otkaz_title"
         caption="Причина отказа"
@@ -204,6 +211,20 @@ export default {
     DxMasterDetail,
     DxSelection,
 
+  },
+  data() {
+    return {
+      orderColors: {
+        Отказ: '#f5564a',
+        'Взят на сборку': '#73C3D9',
+        'Не обработан': '#bbb',
+        'Передан на склад': '#6491e8',
+        Забронирован: '#6491e8',
+        'Заказ отгружен': '#97c95c',
+        'Заказ собран и готов к выдаче': '#73C3D9',
+        Продажа: '#fbce25',
+      },
+    };
   },
   created() {
     loadMessages(ruMessages);
