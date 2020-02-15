@@ -85,6 +85,7 @@
         :cell-template="col.cellTemplate"
         :data-field="col.dataField"
         :caption="col.caption"
+        :sort-order="col.sortOrder"
       ></DxColumn>
       <template #cellTemplate="cell">
         <div>
@@ -162,6 +163,7 @@ export default {
         }, {
           dataField: 'start_time',
           caption: 'Начало звонка',
+          sortOrder: 'desc',
           // groupIndex: 0
         }, {
           dataField: 'answer_time',

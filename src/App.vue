@@ -3,7 +3,10 @@
     <div>
       <b-navbar toggleable="lg" type="light" variant="light">
         <b-navbar-brand href="#" to="/" exact exact-active-class="active">
-          D L V
+          <span class="">D</span>
+          <span class="text-muted"> : </span>
+          <span class="text-danger">A</span>
+<!--          D L V-->
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -11,10 +14,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item to="/orders" exact exact-active-class="active">Заказы</b-nav-item>
-              <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
 <!--<b-nav-item to="/test" exact exact-active-class="active">Тест</b-nav-item>-->
 <!--<b-nav-item to="/TextManipulate" exact exact-active-class="active">Текст</b-nav-item>-->
             <b-nav-item to="/calls" exact exact-active-class="active">Коллцентр</b-nav-item>
+            <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
