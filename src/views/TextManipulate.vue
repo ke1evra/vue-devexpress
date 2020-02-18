@@ -7,30 +7,6 @@
         </div>
       </div>
       <div class="row">
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[0])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[63])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[180])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[120])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[499])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[315])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[410])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[315])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[225])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[35])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[45])">-->
-<!--        </div>-->
-<!--        <div class="col-4 py-5" v-html="textFromObject(data[145])">-->
-<!--        </div>-->
     </div>
     <div class="row">
       <div class="col">

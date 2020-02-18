@@ -14,10 +14,11 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item to="/orders" exact exact-active-class="active">Заказы</b-nav-item>
-<!--<b-nav-item to="/test" exact exact-active-class="active">Тест</b-nav-item>-->
-<!--<b-nav-item to="/TextManipulate" exact exact-active-class="active">Текст</b-nav-item>-->
+<!--        <b-nav-item to="/test" exact exact-active-class="active">Тест</b-nav-item>-->
+<!--        <b-nav-item to="/TextManipulate" exact exact-active-class="active">Текст</b-nav-item>-->
             <b-nav-item to="/calls" exact exact-active-class="active">Коллцентр</b-nav-item>
             <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
+            <b-nav-item to="/expenses" exact exact-active-class="active">Расход</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>

@@ -1,21 +1,24 @@
 <template>
   <div class="row">
-      <div v-for="(month, i) of daysByMonth" v-bind:key="month"
-           v-bind:class="`col-md-1`"
-           >
-        <h5>Месяц {{i}}</h5>
-        <div class="row mx-0">
-          <div class="days-container" v-for="day of month" v-bind:key="day" >
-            <span v-bind:class=
-                    "'w-100 d-inline-block text-center ' +
-                    (day.weekDay >5 ? 'text-danger' : '')"
-            >
-              {{day.day}}
-            </span>
-          </div>
+    <div v-for="(month, i) of daysByMonth" v-bind:key="month"
+         v-bind:class="`col-md-1`"
+         >
+      <h5>Месяц {{i}}</h5>
+      <div class="row mx-0">
+        <div class="days-container" v-for="day of month" v-bind:key="day" >
+          <span v-bind:class=
+                  "'w-100 d-inline-block text-center ' +
+                  (day.weekDay >5 ? 'text-danger' : '')"
+          >
+            {{day.day}}
+          </span>
         </div>
       </div>
     </div>
+    <div class="col">
+      {{daysArray}}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -66,6 +69,7 @@ export default {
           }
         }
         accum[current.month].push(current);
+        console.log(accum);
         return accum;
       }, {});
     },
