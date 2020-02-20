@@ -3,11 +3,13 @@
     <div class="row">
       <div class="col-2">
         <label>Тип отображения данных</label>
-        <b-form-select
-          size="sm"
-          v-model="type"
-          :options="options"
-        ></b-form-select>
+        <b-form inline>
+          <b-form-select
+            size="sm"
+            v-model="type"
+            :options="options"
+          ></b-form-select>
+        </b-form>
       </div>
     </div>
     <div class="row">
@@ -23,6 +25,7 @@
           />
           <DxCommonSeriesSettings
             :type="type"
+            :max-label-count="50"
           >
             <DxLabel
               visible="true"
@@ -269,7 +272,7 @@ export default {
         html: `
             <div>
               <div class='tooltip-header'>
-                ${moment(pointInfo.argumentText, 'YYYY-MM-DD').locale('ru').format('LL')}
+                ${moment(pointInfo.argument).locale('ru').format('LL')}
               </div>
               <div class='tooltip-body'>
                 ${html}

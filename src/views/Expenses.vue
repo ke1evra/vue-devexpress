@@ -12,15 +12,15 @@
       </div>
       <div class="row">
         <div class="col">
-          <h3>Распределение заказов по источникам</h3>
-          <order-sources-chart-by-day
-            v-bind:dataSourceUrl="constructLink('vkostume')">
-          </order-sources-chart-by-day>
           <h3>Расходы по источникам по дням</h3>
           <expenses-by-day-chart
             v-bind:dataSourceUrl="constructCostLink('vkostume')"
           >
           </expenses-by-day-chart>
+          <h3>Распределение заказов по источникам</h3>
+          <order-sources-chart-by-day
+            v-bind:dataSourceUrl="constructLink('vkostume')">
+          </order-sources-chart-by-day>
         </div>
       </div>
     </div>
