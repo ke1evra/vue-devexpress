@@ -231,7 +231,7 @@ export default {
       console.log(pointInfo);
       // eslint-disable-next-line consistent-return
       const drawSingleElement = (name, val, percent) => {
-        if (val * 1 > 0) {
+        if (val > 0 && percent) {
           return `
           <div class='series-name'>
             <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;${name}:
@@ -241,6 +241,7 @@ export default {
           </div>
         `;
         }
+        return '';
       };
       // eslint-disable-next-line no-return-assign
       const html = pointInfo.points.reduce((ac, el) =>
