@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col">
         <DxChart
-          id="orderSourcesChartByDay"
+          id="expensesByDayChart"
           :data-source="dataSourceUrl"
           v-if="dataSourceUrl"
         >
@@ -23,6 +23,7 @@
           />
           <DxCommonSeriesSettings
             :type="type"
+            :max-label-count="50"
           >
             <DxLabel
               visible="true"
@@ -47,11 +48,12 @@
             :value-field="series.valueField"
             :name="series.name"
             formar="number"
-            :color="series.color"
+            value-type="numeric"
           >
           </DxSeries>
           <DxArgumentAxis
             tick-interval="day"
+            value-type="numeric"
             argument-type="datetime"
           >
           </DxArgumentAxis>
@@ -136,7 +138,7 @@ const numberWithCommas = (x, text) => {
 };
 
 export default {
-  name: 'orderSourcesChartByDay',
+  name: 'expensesByDayChart',
   components: {
     DxChart,
     DxSeries,
@@ -172,54 +174,19 @@ export default {
       dataArray: [],
       seriesArray: [
         {
-          valueField: 'seo_google',
-          name: 'SEO Google',
-          color: '#5899da',
-        },
-        {
-          valueField: 'seo_yandex',
-          name: 'SEO Яндекс',
-          color: '#e8743b',
-        },
-        {
-          valueField: 'googleads',
-          name: 'Google Ads',
-          color: '#19a979',
+          valueField: 'yandexmarket',
+          name: 'Яндекс Маркет',
+          color: '#97c95c',
         },
         {
           valueField: 'yandexdirect',
           name: 'Яндекс Директ',
-          color: '#ed4a7b',
+          color: '#1db2f5',
         },
         {
-          valueField: 'yandexmarket',
-          name: 'Яндекс Маркет',
-          color: '#945ecf',
-        },
-        {
-          valueField: 'email',
-          name: 'E-mail рассылка',
-          color: '#13a4b4',
-        },
-        {
-          valueField: 'seo_mailru',
-          color: '#525df4',
-          name: 'SEO mail.ru',
-        },
-        {
-          valueField: 'seo_bing',
-          color: '#bf399e',
-          name: 'SEO Bing',
-        },
-        {
-          valueField: 'seo_yahoo',
-          name: 'SEO Yahoo',
-          color: '#ee6868',
-        },
-        {
-          valueField: 'seo_rambler',
-          name: 'SEO Рамблер',
-          color: '#2f6497',
+          valueField: 'googleads',
+          name: 'Google Ads',
+          color: '#f57f21',
         },
       ],
       tooltipColors: null,
@@ -228,7 +195,7 @@ export default {
   props: [
     'dataSourceUrl',
   ],
-  created() {
+  mounted() {
     loadMessages(ruMessages);
     locale('ru');
     moment.locale('ru');
@@ -248,7 +215,7 @@ export default {
       console.log(pointInfo);
       // eslint-disable-next-line consistent-return
       const drawSingleElement = (name, val, percent) => {
-        if (val > 0) {
+        if (val * 1 > 0) {
           return `
           <div class='series-name'>
             <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;${name}:
@@ -258,9 +225,8 @@ export default {
           </div>
         `;
         }
-        return '';
       };
-        // eslint-disable-next-line no-unused-vars,no-return-assign
+      // eslint-disable-next-line no-return-assign
       const html = pointInfo.points.reduce((ac, el) =>
       // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
         ac += drawSingleElement(el.seriesName, el.valueText, el.percentText),
@@ -286,7 +252,7 @@ export default {
 </script>
 
 <style lang="css">
-  #orderSourcesChartByDay{
+  #expensesByDayChart{
     width: 100%;
     height: 400px;
   }

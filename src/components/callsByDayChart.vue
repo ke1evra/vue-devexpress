@@ -19,6 +19,7 @@
           position="inside"
           overlapping-behavior="none"
           background-color="none"
+          show-for-zero-values="false"
         >
         </DxLabel>
         <DxPoint :visible="false">

@@ -8,26 +8,19 @@
                             v-bind:from="from"
                             v-bind:to="to"
           ></dual-date-picker>
-<!--          <b-form-select v-model="selected" :options="options"></b-form-select>-->
         </div>
       </div>
-<!--      <div class="row">-->
-<!--        <div class="col">-->
-<!--          <p class="bg-light rounded p-3">-->
-<!--            from: {{from}}-->
-<!--            <br>-->
-<!--            to: {{to}}-->
-<!--            <br>-->
-<!--            {{constructLink('vkostume')}}-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
       <div class="row">
         <div class="col">
           <h3>Распределение заказов по источникам</h3>
           <order-sources-chart-by-day
             v-bind:dataSourceUrl="constructLink('vkostume')">
           </order-sources-chart-by-day>
+          <h3>Расходы по источникам по дням</h3>
+          <expenses-by-day-chart
+            v-bind:dataSourceUrl="constructCostLink('vkostume')"
+          >
+          </expenses-by-day-chart>
         </div>
       </div>
     </div>
@@ -38,10 +31,11 @@ import moment from 'moment';
 // import axios from 'axios';
 import DualDatePicker from '../components/dualDatePicker.vue';
 import orderSourcesChartByDay from '../components/orderSourcesChartByDay.vue';
+import expensesByDayChart from '../components/expensesByDayChart.vue';
 
 export default {
   name: 'Expenses',
-  components: { DualDatePicker, orderSourcesChartByDay },
+  components: { DualDatePicker, orderSourcesChartByDay, expensesByDayChart },
   data() {
     return {
       dataSource: null,
@@ -82,6 +76,10 @@ export default {
     constructLink(shop) {
       const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
       return `http://185.176.25.157:3000/expenses/order_source?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
+    },
+    constructCostLink(shop) {
+      const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
+      return `http://185.176.25.157:3000/expenses/cost?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
     },
   },
 };
