@@ -131,12 +131,7 @@ import {
 import { locale, loadMessages } from 'devextreme/localization';
 import ruMessages from 'devextreme/localization/messages/ru.json';
 import moment from 'moment';
-
-const numberWithCommas = (x, text) => {
-  const value = x.value ? x.value : x;
-  const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
-  return text ? `${text} ${formatted}` : formatted;
-};
+import { customizeTooltip, custimizeTitleThousands, setTooltipColors } from '../methods/chartHelpers';
 
 export default {
   name: 'orderSourcesChartByDay',
@@ -245,58 +240,11 @@ export default {
     loadMessages(ruMessages);
     locale('ru');
     moment.locale('ru');
-    this.getTooltipColors();
+    this.tooltipColors = setTooltipColors(this.seriesArray);
   },
   methods: {
-    getTooltipColors() {
-      const colors = {};
-      // eslint-disable-next-line array-callback-return
-      this.seriesArray.map((item) => {
-        colors[item.name] = item.color;
-      });
-      console.log(colors);
-      this.tooltipColors = colors;
-    },
-    customizeTooltip(pointInfo) {
-      console.log(pointInfo);
-      console.log(pointInfo.value);
-      // eslint-disable-next-line consistent-return
-
-      const drawSingleElement = (name, val, percent) => {
-        if (val > 0) {
-          return `
-          <div class='series-name'>
-            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;
-            <span ${pointInfo.seriesName === name ? `style="color:${this.tooltipColors[name]};font-weight:600!important;text-decoration:underline;"` : ''}>${name}:</span>
-          </div>
-          <div class='value-text'>
-            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>${numberWithCommas(val)}${percent ? `&nbsp<i >(${percent})</i>` : ''}</span>
-          </div>
-        `;
-        }
-        return '';
-      };
-        // eslint-disable-next-line no-unused-vars,no-return-assign
-      const html = pointInfo.points.reduce((ac, el) =>
-      // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
-        ac += drawSingleElement(el.seriesName, el.valueText, el.percentText),
-      '');
-      return {
-        html: `
-            <div>
-              <div class='tooltip-header'>
-                ${moment(pointInfo.argument).locale('ru').format('LL')}
-              </div>
-              <div class='tooltip-body'>
-                ${html}
-              </div>
-            </div>
-          </div>`,
-      };
-    },
-    custimizeTitleThousands({ valueText }) {
-      return `${numberWithCommas(Math.round(valueText / 1000))} к`;
-    },
+    customizeTooltip,
+    custimizeTitleThousands,
   },
 };
 </script>

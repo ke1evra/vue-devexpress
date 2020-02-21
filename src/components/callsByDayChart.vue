@@ -220,9 +220,9 @@ export default {
 </script>
 
 <style lang="css">
-  #orderChart{
+  #callsChart{
     width: 100%;
-    height: 900px;
+    height: 400px;
   }
 
   .tooltip-header {

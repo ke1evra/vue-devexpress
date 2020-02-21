@@ -3,6 +3,7 @@
     <DxChart
       id="orderChart"
       :data-source="calcData()"
+      v-if="dataSource"
     >
       <DxExport
         :enabled="true"
@@ -219,7 +220,6 @@ export default {
     'dataSource',
   ],
   created() {
-    this.width = this.$refs.app.clientWidth;
     loadMessages(ruMessages);
     locale('ru');
     moment.locale('ru');
@@ -252,9 +252,10 @@ export default {
       }, []);
     },
     calcData() {
+      console.log(this.dataSource.length);
       const calculatedData = this.dataSource.reduce(
         (acum, item) => {
-          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_id === 1) {
+          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_title === 'Вкостюме.ру') {
             if (!acum[item.created_day]) {
               // eslint-disable-next-line no-param-reassign
               acum[item.created_day] = {

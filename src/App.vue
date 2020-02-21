@@ -110,12 +110,12 @@ export default {
 </script>
 
 <style lang="scss">
-/*@import "assets/scss/custom.scss";*/
-@import "~devextreme/dist/css/dx.common.css";
-@import "~devextreme/dist/css/dx.light.compact.css";
-/*@import '~devextreme/dist/css/dx.dark.compact.css';*/
-@import "~bootstrap/scss/bootstrap.scss";
-@import "~bootstrap-vue/src/index.scss";
+  /*@import "assets/scss/custom.scss";*/
+  @import "~devextreme/dist/css/dx.common.css";
+  @import "~devextreme/dist/css/dx.light.compact.css";
+  /*@import '~devextreme/dist/css/dx.dark.compact.css';*/
+  @import "~bootstrap/scss/bootstrap.scss";
+  @import "~bootstrap-vue/src/index.scss";
 </style>
 
 <!--<style lang="scss" module="theme-dark">-->
