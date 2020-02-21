@@ -224,6 +224,16 @@ export default {
           name: 'SEO Рамблер',
           color: '#2f6497',
         },
+        {
+          valueField: 'other',
+          name: 'Другой',
+          color: '#777',
+        },
+        {
+          valueField: 'unknown',
+          name: 'Не определен',
+          color: '#999',
+        },
       ],
       tooltipColors: null,
     };
@@ -249,12 +259,15 @@ export default {
     },
     customizeTooltip(pointInfo) {
       console.log(pointInfo);
+      console.log(pointInfo.value);
       // eslint-disable-next-line consistent-return
+
       const drawSingleElement = (name, val, percent) => {
         if (val > 0) {
           return `
           <div class='series-name'>
-            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;${name}:
+            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;
+            <span ${pointInfo.seriesName === name ? `style="color:${this.tooltipColors[name]};font-weight:600!important;text-decoration:underline;"` : ''}>${name}:</span>
           </div>
           <div class='value-text'>
             <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>${numberWithCommas(val)}${percent ? `&nbsp<i >(${percent})</i>` : ''}</span>
