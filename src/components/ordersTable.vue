@@ -55,6 +55,16 @@
         data-field="name"
         caption="Менеджер"
       />
+      <template #cellTemplateProceedTime="cell">
+        <span :class="'text-' + defineProceedTimeColors(cell.data.value)">
+          {{formatSecondsAsHHMMSS(cell.data.value)}}
+        </span>
+      </template>
+      <DxColumn
+        data-field="proceed_time"
+        caption="Скорость обработки заказа"
+        cell-template="cellTemplateProceedTime"
+      />
       <DxColumn
         data-field="shop_title"
         caption="Магазин"
@@ -182,7 +192,7 @@ import {
 import { locale, loadMessages } from 'devextreme/localization';
 import ruMessages from 'devextreme/localization/messages/ru.json';
 import DetailTemplate from './DetailTemplate.vue';
-
+import { formatSecondsAsHHMMSS } from '../methods/chartHelpers';
 
 const numberWithCommas = (x, text) => {
   const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -210,7 +220,6 @@ export default {
     DxExport,
     DxMasterDetail,
     DxSelection,
-
   },
   data() {
     return {
@@ -237,6 +246,15 @@ export default {
     formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
     formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
     formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
+    formatSecondsAsHHMMSS,
+    defineProceedTimeColors(val) {
+      if (val < 1800) { // полчаса
+        return 'success';
+      } if (val < 7200) {
+        return 'warning';
+      }
+      return 'danger';
+    },
   },
 };
 </script>

@@ -1,9 +1,31 @@
 import moment from 'moment';
+import { fromS } from 'hh-mm-ss';
 
 const numberWithCommas = (x, text) => {
   const value = x.value ? x.value : x;
   const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
   return text ? `${text} ${formatted}` : formatted;
+};
+
+const formatSecondsAsHHMMSS = (e, text) => {
+  if (!text) {
+    // eslint-disable-next-line no-param-reassign
+    text = '';
+  } else {
+    // eslint-disable-next-line no-param-reassign
+    text = `${text}: `;
+  }
+  let format = 'hh:mm:ss';
+  if (e > 3600) {
+    format = 'hh:mm:ss';
+  } else {
+    format = 'mm:ss';
+  }
+  let returnString = '';
+  if (e > 0) {
+    returnString = `${text}${fromS(Math.round(e), format)}`;
+  }
+  return returnString;
 };
 
 function customizeTooltip(pointInfo) {
@@ -60,4 +82,5 @@ export {
   numberWithCommas,
   custimizeTitleThousands,
   setTooltipColors,
+  formatSecondsAsHHMMSS,
 };
