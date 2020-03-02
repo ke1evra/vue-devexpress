@@ -175,6 +175,18 @@ export default {
           value: 'fullstackedbar',
           text: 'Проценты',
         },
+        {
+          value: 'splinearea',
+          text: 'splinearea',
+        },
+        {
+          value: 'stackedsplinearea',
+          text: 'stackedsplinearea',
+        },
+        {
+          value: 'fullstackedsplinearea',
+          text: 'fullstackedsplinearea',
+        },
       ],
       dataArray: [],
       seriesArray: [
