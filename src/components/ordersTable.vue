@@ -6,6 +6,7 @@
       :allow-column-reordering="true"
       :data-source="dataSource"
       :hover-state-enabled="true"
+      @selection-changed="selectionChanged"
     >
       <DxSelection mode="single"/>
       <DxExport
@@ -254,6 +255,10 @@ export default {
         return 'warning';
       }
       return 'danger';
+    },
+    selectionChanged(e) {
+      e.component.collapseAll(-1);
+      e.component.expandRow(e.currentSelectedRowKeys[0]);
     },
   },
 };

@@ -103,7 +103,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     Promise.all(added).then((sheets) => {
       this.loading = false;
-      this.themeHelper.theme = 'dark';
+      this.themeHelper.theme = 'light';
     });
   },
 };
