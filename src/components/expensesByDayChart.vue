@@ -116,34 +116,6 @@
 
 
 import {
-  DxChart,
-  DxSeries,
-  DxArgumentAxis,
-  DxLegend,
-  DxCommonSeriesSettings,
-  DxLabel,
-  DxValueAxis,
-  // DxPane,
-  DxTooltip,
-  DxTitle,
-  DxCrosshair,
-  DxFont,
-  DxPoint,
-  DxPointHoverStyle,
-  DxExport,
-  // DxPointBorder,
-
-} from 'devextreme-vue/chart';
-
-
-import { locale, loadMessages } from 'devextreme/localization';
-import ruMessages from 'devextreme/localization/messages/ru.json';
-import moment from 'moment';
-import { customizeTooltip, custimizeTitleThousands, setTooltipColors } from '../methods/chartHelpers';
-
-export default {
-  name: 'expensesByDayChart',
-  components: {
     DxChart,
     DxSeries,
     DxArgumentAxis,
@@ -160,75 +132,103 @@ export default {
     DxPointHoverStyle,
     DxExport,
     // DxPointBorder,
-  },
-  data() {
-    return {
-      type: 'stackedbar',
-      seriesType: null,
-      options: [
-        {
-          value: 'stackedbar',
-          text: 'Кол-во',
-          selected: true,
-        },
-        {
-          value: 'fullstackedbar',
-          text: 'Проценты',
-        },
-        {
-          value: 'splinearea',
-          text: 'splinearea',
-        },
-        {
-          value: 'stackedsplinearea',
-          text: 'stackedsplinearea',
-        },
-        {
-          value: 'fullstackedsplinearea',
-          text: 'fullstackedsplinearea',
-        },
-      ],
-      dataArray: [],
-      seriesArray: [
-        {
-          valueField: 'yandexmarket',
-          name: 'Яндекс Маркет',
-          color: '#97c95c',
-        },
-        {
-          valueField: 'yandexdirect',
-          name: 'Яндекс Директ',
-          color: '#1db2f5',
-        },
-        {
-          valueField: 'googleads',
-          name: 'Google Ads',
-          color: '#f57f21',
-        },
-      ],
-      totalSeriesArray: [
-        {
-          valueField: 'total',
-          name: 'Расход',
-          color: '#97c95c',
-        },
-      ],
-      tooltipColors: null,
-    };
-  },
-  props: [
-    'dataSourceUrl',
-  ],
-  mounted() {
-    loadMessages(ruMessages);
-    locale('ru');
-    moment.locale('ru');
-    this.tooltipColors = setTooltipColors(this.seriesArray);
-  },
-  methods: {
-    customizeTooltip,
-    custimizeTitleThousands,
-  },
+
+} from 'devextreme-vue/chart';
+
+
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+import moment from 'moment';
+import { customizeTooltip, custimizeTitleThousands, setTooltipColors } from '../methods/chartHelpers';
+
+export default {
+    name: 'expensesByDayChart',
+    components: {
+        DxChart,
+        DxSeries,
+        DxArgumentAxis,
+        DxLegend,
+        DxCommonSeriesSettings,
+        DxLabel,
+        DxValueAxis,
+        // DxPane,
+        DxTooltip,
+        DxTitle,
+        DxCrosshair,
+        DxFont,
+        DxPoint,
+        DxPointHoverStyle,
+        DxExport,
+    // DxPointBorder,
+    },
+    data() {
+        return {
+            type: 'stackedbar',
+            seriesType: null,
+            options: [
+                {
+                    value: 'stackedbar',
+                    text: 'Кол-во',
+                    selected: true,
+                },
+                {
+                    value: 'fullstackedbar',
+                    text: 'Проценты',
+                },
+                {
+                    value: 'splinearea',
+                    text: 'splinearea',
+                },
+                {
+                    value: 'stackedsplinearea',
+                    text: 'stackedsplinearea',
+                },
+                {
+                    value: 'fullstackedsplinearea',
+                    text: 'fullstackedsplinearea',
+                },
+            ],
+            dataArray: [],
+            seriesArray: [
+                {
+                    valueField: 'yandexmarket',
+                    name: 'Яндекс Маркет',
+                    color: '#97c95c',
+                },
+                {
+                    valueField: 'yandexdirect',
+                    name: 'Яндекс Директ',
+                    color: '#1db2f5',
+                },
+                {
+                    valueField: 'googleads',
+                    name: 'Google Ads',
+                    color: '#f57f21',
+                },
+            ],
+            totalSeriesArray: [
+                {
+                    valueField: 'total',
+                    name: 'Расход',
+                    color: '#97c95c',
+                },
+            ],
+            tooltipColors: null,
+        };
+    },
+    props: [
+        'dataSourceUrl',
+    ],
+    mounted() {
+        loadMessages(ruMessages);
+        locale('ru');
+        moment.locale('ru');
+        this.tooltipColors = setTooltipColors(this.seriesArray);
+    },
+    methods: {
+        customizeTooltip,
+        custimizeTitleThousands,
+    },
 };
 </script>
 

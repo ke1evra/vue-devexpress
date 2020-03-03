@@ -161,39 +161,6 @@
 
 <script>
 import {
-  DxChart,
-  DxSeries,
-  DxArgumentAxis,
-  DxLegend,
-  DxCommonSeriesSettings,
-  DxLabel,
-  DxValueAxis,
-  DxPane,
-  DxTooltip,
-  DxTitle,
-  DxCrosshair,
-  DxFont,
-  DxPoint,
-  DxPointHoverStyle,
-  DxExport,
-  // DxPointBorder,
-
-} from 'devextreme-vue/chart';
-
-
-import { locale, loadMessages } from 'devextreme/localization';
-import ruMessages from 'devextreme/localization/messages/ru.json';
-import moment from 'moment';
-
-const numberWithCommas = (x, text) => {
-  const value = x.value ? x.value : x;
-  const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
-  return text ? `${text} ${formatted}` : formatted;
-};
-
-export default {
-  name: 'ordersChart',
-  components: {
     DxChart,
     DxSeries,
     DxArgumentAxis,
@@ -210,82 +177,115 @@ export default {
     DxPointHoverStyle,
     DxExport,
     // DxPointBorder,
-  },
-  data() {
-    return {
-      dataArray: [],
-    };
-  },
-  props: [
-    'dataSource',
-  ],
-  created() {
-    loadMessages(ruMessages);
-    locale('ru');
-    moment.locale('ru');
-  },
-  methods: {
-    calcSeries(ordersData) {
-      const ordersColors = {
-        'Не обработан': '#bbb',
-        'Передан на склад': '#73C3D9',
-        Отказ: '#f5564a',
-        Забронирован: '#6491e8',
-        'Заказ отгружен': '#97c95c',
-        'Заказ собран и готов к выдаче': '#3dabd9',
-        Продажа: '#fbce25',
-      };
-      const series = [];
-      return ordersData.reduce((ac, el) => {
-        if (!series[el.order_status_title]) {
-          series[el.order_status_title] = true;
-          ac.push({
-            valueField: el.order_status_title,
-            name: el.order_status_title,
-          });
-          if (ordersColors[el.order_status_title]) {
-            // eslint-disable-next-line no-param-reassign
-            ac[ac.length - 1].color = ordersColors[el.order_status_title];
-          }
-        }
-        return ac;
-      }, []);
+
+} from 'devextreme-vue/chart';
+
+
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+import moment from 'moment';
+
+const numberWithCommas = (x, text) => {
+    const value = x.value ? x.value : x;
+    const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
+    return text ? `${text} ${formatted}` : formatted;
+};
+
+export default {
+    name: 'ordersChart',
+    components: {
+        DxChart,
+        DxSeries,
+        DxArgumentAxis,
+        DxLegend,
+        DxCommonSeriesSettings,
+        DxLabel,
+        DxValueAxis,
+        DxPane,
+        DxTooltip,
+        DxTitle,
+        DxCrosshair,
+        DxFont,
+        DxPoint,
+        DxPointHoverStyle,
+        DxExport,
+    // DxPointBorder,
     },
-    calcData() {
-      console.log(this.dataSource.length);
-      const calculatedData = this.dataSource.reduce(
-        (acum, item) => {
-          if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_title === 'Вкостюме.ру') {
-            if (!acum[item.created_day]) {
-              // eslint-disable-next-line no-param-reassign
-              acum[item.created_day] = {
-                day: moment(item.created_day).toDate(),
-                count: 0,
-                sum: 0,
-                avg: 0,
-              };
-            }
-            if (!acum[item.created_day][item.order_status_title]) {
-              // eslint-disable-next-line no-param-reassign
-              acum[item.created_day][item.order_status_title] = 0;
-            }
-            // eslint-disable-next-line no-param-reassign,no-plusplus
-            acum[item.created_day][item.order_status_title]++;
-            // eslint-disable-next-line no-param-reassign
-            acum[item.created_day].count += 1;
-            // eslint-disable-next-line no-param-reassign
-            acum[item.created_day].sum += item.order_sum;
-            // eslint-disable-next-line no-param-reassign,max-len
-            acum[item.created_day].avg = Math.round(acum[item.created_day].sum / acum[item.created_day].count);
-          }
-          return acum;
-        }, {},
-      );
-      return Object.keys(calculatedData)
-        .map(key => calculatedData[key]);
+    data() {
+        return {
+            dataArray: [],
+        };
     },
-    customizeTooltip(pointInfo) {
-      const drawSingleElement = (name, val) => `
+    props: [
+        'dataSource',
+    ],
+    created() {
+        loadMessages(ruMessages);
+        locale('ru');
+        moment.locale('ru');
+    },
+    methods: {
+        calcSeries(ordersData) {
+            const ordersColors = {
+                'Не обработан': '#bbb',
+                'Передан на склад': '#73C3D9',
+                Отказ: '#f5564a',
+                Забронирован: '#6491e8',
+                'Заказ отгружен': '#97c95c',
+                'Заказ собран и готов к выдаче': '#3dabd9',
+                Продажа: '#fbce25',
+            };
+            const series = [];
+            return ordersData.reduce((ac, el) => {
+                if (!series[el.order_status_title]) {
+                    series[el.order_status_title] = true;
+                    ac.push({
+                        valueField: el.order_status_title,
+                        name: el.order_status_title,
+                    });
+                    if (ordersColors[el.order_status_title]) {
+                        // eslint-disable-next-line no-param-reassign
+                        ac[ac.length - 1].color = ordersColors[el.order_status_title];
+                    }
+                }
+                return ac;
+            }, []);
+        },
+        calcData() {
+            console.log(this.dataSource.length);
+            const calculatedData = this.dataSource.reduce(
+                (acum, item) => {
+                    if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_title === 'Вкостюме.ру') {
+                        if (!acum[item.created_day]) {
+                            // eslint-disable-next-line no-param-reassign
+                            acum[item.created_day] = {
+                                day: moment(item.created_day).toDate(),
+                                count: 0,
+                                sum: 0,
+                                avg: 0,
+                            };
+                        }
+                        if (!acum[item.created_day][item.order_status_title]) {
+                            // eslint-disable-next-line no-param-reassign
+                            acum[item.created_day][item.order_status_title] = 0;
+                        }
+                        // eslint-disable-next-line no-param-reassign,no-plusplus
+                        acum[item.created_day][item.order_status_title]++;
+                        // eslint-disable-next-line no-param-reassign
+                        acum[item.created_day].count += 1;
+                        // eslint-disable-next-line no-param-reassign
+                        acum[item.created_day].sum += item.order_sum;
+                        // eslint-disable-next-line no-param-reassign,max-len
+                        acum[item.created_day].avg = Math.round(acum[item.created_day].sum / acum[item.created_day].count);
+                    }
+                    return acum;
+                }, {},
+            );
+            return Object.keys(calculatedData)
+                .map(key => calculatedData[key]);
+        },
+        customizeTooltip(pointInfo) {
+            const drawSingleElement = (name, val) => `
           <div class='series-name'>
             ${name}:
           </div>
@@ -293,13 +293,13 @@ export default {
             ${numberWithCommas(val)}
           </div>
         `;
-      // eslint-disable-next-line no-unused-vars,no-return-assign
-      const html = pointInfo.points.reduce((ac, el) =>
-        // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
-        ac += drawSingleElement(el.seriesName, el.valueText),
-      '');
-      return {
-        html: `
+            // eslint-disable-next-line no-unused-vars,no-return-assign
+            const html = pointInfo.points.reduce((ac, el) =>
+            // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
+                ac += drawSingleElement(el.seriesName, el.valueText),
+            '');
+            return {
+                html: `
             <div>
               <div class='tooltip-header'>
                 ${moment(pointInfo.argumentText).locale('ru').format('LL')}
@@ -309,15 +309,15 @@ export default {
               </div>
             </div>
           </div>`,
-      };
+            };
+        },
+        custimizeTitleThousands({ valueText }) {
+            return `${numberWithCommas(Math.round(valueText / 1000))} к`;
+        },
+        customizeTooltipLabel({ valueText }) {
+            return valueText * 1 > 1 ? `${numberWithCommas(valueText)}` : `${Math.round(valueText * 1 / 100)}`;
+        },
     },
-    custimizeTitleThousands({ valueText }) {
-      return `${numberWithCommas(Math.round(valueText / 1000))} к`;
-    },
-    customizeTooltipLabel({ valueText }) {
-      return valueText * 1 > 1 ? `${numberWithCommas(valueText)}` : `${Math.round(valueText * 1 / 100)}`;
-    },
-  },
 };
 </script>
 

@@ -22,25 +22,25 @@ import DualDatePicker from '../components/dualDatePicker.vue';
 
 
 export default {
-  components: { DualDatePicker, OrdersTable, OrdersChart },
-  data() {
-    return {
-      dataSource: null,
-      url: null,
-      loading: null,
-    };
-  },
-  methods: {
-    getData(url) {
-      this.loading = true;
-      axios
-        .get(url)
-        // eslint-disable-next-line no-return-assign
-        .then((response) => {
-          this.loading = false;
-          this.dataSource = response.data;
-        });
+    components: { DualDatePicker, OrdersTable, OrdersChart },
+    data() {
+        return {
+            dataSource: null,
+            url: null,
+            loading: null,
+        };
     },
-  },
+    methods: {
+        getData(url) {
+            this.loading = true;
+            axios
+                .get(url)
+            // eslint-disable-next-line no-return-assign
+                .then((response) => {
+                    this.loading = false;
+                    this.dataSource = response.data;
+                });
+        },
+    },
 };
 </script>

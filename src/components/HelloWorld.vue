@@ -6,15 +6,15 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String,
-  },
-  data() {
-    return {
-      message: 'Привет, Vue!',
-    };
-  },
+    name: 'HelloWorld',
+    props: {
+        msg: String,
+    },
+    data() {
+        return {
+            message: 'Привет, Vue!',
+        };
+    },
 };
 </script>
 

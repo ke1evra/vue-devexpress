@@ -43,69 +43,69 @@
 <script>
 // eslint-disable-next-line func-names
 const ThemeHelper = function () {
-  const preloadTheme = (href) => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
+    const preloadTheme = (href) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
 
-    return new Promise((resolve, reject) => {
-      link.onload = (e) => {
-        const { sheet } = e.target;
-        sheet.disabled = true;
-        resolve(sheet);
-      };
-      link.onerror = reject;
-    });
-  };
+        return new Promise((resolve, reject) => {
+            link.onload = (e) => {
+                const { sheet } = e.target;
+                sheet.disabled = true;
+                resolve(sheet);
+            };
+            link.onerror = reject;
+        });
+    };
 
-  const selectTheme = (themes, name) => {
-    if (name && !themes[name]) {
-      throw new Error(`"${name}" has not been defined as a theme.`);
-    }
-    // eslint-disable-next-line no-param-reassign,no-return-assign
-    Object.keys(themes).forEach(n => (themes[n].disabled = n !== name));
-  };
+    const selectTheme = (themes, name) => {
+        if (name && !themes[name]) {
+            throw new Error(`"${name}" has not been defined as a theme.`);
+        }
+        // eslint-disable-next-line no-param-reassign,no-return-assign
+        Object.keys(themes).forEach(n => (themes[n].disabled = n !== name));
+    };
 
-  const themes = {};
+    const themes = {};
 
-  return {
+    return {
     // eslint-disable-next-line no-return-assign
-    add(name, href) {
-      // eslint-disable-next-line no-return-assign
-      return preloadTheme(href).then(s => (themes[name] = s));
-    },
-    set theme(name) {
-      selectTheme(themes, name);
-    },
-    get theme() {
-      return Object.keys(themes).find(n => !themes[n].disabled);
-    },
-  };
+        add(name, href) {
+            // eslint-disable-next-line no-return-assign
+            return preloadTheme(href).then(s => (themes[name] = s));
+        },
+        set theme(name) {
+            selectTheme(themes, name);
+        },
+        get theme() {
+            return Object.keys(themes).find(n => !themes[n].disabled);
+        },
+    };
 };
 
 export default {
-  data() {
-    return {
-      themes: {
-        light: '/css/light.css',
-        dark: '/css/dark.css',
-      },
-      themeHelper: new ThemeHelper(),
-      loading: true,
-    };
-  },
-  created() {
+    data() {
+        return {
+            themes: {
+                light: '/css/light.css',
+                dark: '/css/dark.css',
+            },
+            themeHelper: new ThemeHelper(),
+            loading: true,
+        };
+    },
+    created() {
     // add/load themes
     // eslint-disable-next-line max-len
-    const added = Object.keys(this.themes).map(name => this.themeHelper.add(name, this.themes[name]));
+        const added = Object.keys(this.themes).map(name => this.themeHelper.add(name, this.themes[name]));
 
-    // eslint-disable-next-line no-unused-vars
-    Promise.all(added).then((sheets) => {
-      this.loading = false;
-      this.themeHelper.theme = 'light';
-    });
-  },
+        // eslint-disable-next-line no-unused-vars
+        Promise.all(added).then((sheets) => {
+            this.loading = false;
+            this.themeHelper.theme = 'light';
+        });
+    },
 };
 </script>
 

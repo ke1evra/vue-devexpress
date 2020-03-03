@@ -100,117 +100,12 @@
 <script>
 import TimeFormat from 'hh-mm-ss';
 import {
-  DxDataGrid,
-  DxColumn,
-  DxGrouping,
-  DxGroupPanel,
-  DxSearchPanel,
-  DxPaging,
-  // DxFormat,
-  DxPager,
-  // DxSummary,
-  // DxGroupItem,
-  // DxSortByGroupSummaryInfo,
-  // DxTotalItem,
-  DxFilterRow,
-  DxHeaderFilter,
-  DxExport,
-
-} from 'devextreme-vue/data-grid';
-import { locale, loadMessages } from 'devextreme/localization';
-import ruMessages from 'devextreme/localization/messages/ru.json';
-
-const numberWithCommas = (x, text) => {
-  const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return text ? `${text} ${formatted}` : formatted;
-};
-const formatSecondsAsHHMMSS = (e, text) => {
-  let format = 'hh:mm:ss';
-  if (e.value > 3600) {
-    format = 'hh:mm:ss';
-  } else {
-    format = 'mm:ss';
-  }
-  let returnString = '';
-  if (e.value > 0) {
-    returnString = `${text ? `${text}: ` : ''}${TimeFormat.fromS(Math.round(e.value), format)}`;
-  }
-  return returnString;
-};
-
-export default {
-  name: 'ordersTable',
-  data() {
-    return {
-      // tooltipColors: {
-      //   Входящий: 'rgba(151, 201, 92, 0.3)',
-      //   Исходящий: 'rgba(30, 178, 245, 0.3)',
-      //   Недозвон: 'rgba(245, 127, 33, 0.3)',
-      //   Пропущенный: 'rgba(245, 86, 74, 0.3)',
-      // },
-      tooltipColors: {
-        Входящий: '#97c95c',
-        Исходящий: '#1db2f5',
-        Недозвон: '#f57f21',
-        Пропущенный: '#f5564a',
-      },
-      columns: [
-        {
-          dataField: 'start_day',
-          caption: 'День',
-          // groupIndex: 0,
-          sortOrder: 'desc',
-        }, {
-          dataField: 'start_time',
-          caption: 'Начало звонка',
-          sortOrder: 'desc',
-          // groupIndex: 0
-        }, {
-          dataField: 'answer_time',
-          caption: 'Скорость ответа',
-          // groupIndex: 0
-        }, {
-          dataField: 'call_duration',
-          caption: 'Длительность',
-          customizeText(e) {
-            return formatSecondsAsHHMMSS(e);
-          },
-          // groupIndex: 0
-        }, {
-          dataField: 'fail_time',
-          caption: 'Длительность дозвона',
-          // groupIndex: 0
-        }, {
-          dataField: 'call_type',
-          caption: 'Тип звонка',
-          groupIndex: 1,
-          cellTemplate: 'cellTemplate',
-        }, {
-          dataField: 'person',
-          caption: 'Сотрудник',
-          groupIndex: 2,
-        }, {
-          dataField: 'client',
-          caption: 'Клиент',
-          // groupIndex: 0
-        }, {
-          dataField: 'line_number',
-          caption: 'Линия',
-          // groupIndex: 0
-        }, {
-          dataField: 'records',
-          caption: 'Записи',
-          // groupIndex: 0
-        }],
-    };
-  },
-  components: {
-    DxColumn,
-    DxGroupPanel,
-    DxGrouping,
-    DxPaging,
-    DxSearchPanel,
     DxDataGrid,
+    DxColumn,
+    DxGrouping,
+    DxGroupPanel,
+    DxSearchPanel,
+    DxPaging,
     // DxFormat,
     DxPager,
     // DxSummary,
@@ -221,19 +116,124 @@ export default {
     DxHeaderFilter,
     DxExport,
 
-  },
-  created() {
-    loadMessages(ruMessages);
-    locale('ru');
-  },
-  props: [
-    'dataSource',
-  ],
-  methods: {
-    formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
-    formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
-    formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
-  },
+} from 'devextreme-vue/data-grid';
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+
+const numberWithCommas = (x, text) => {
+    const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return text ? `${text} ${formatted}` : formatted;
+};
+const formatSecondsAsHHMMSS = (e, text) => {
+    let format = 'hh:mm:ss';
+    if (e.value > 3600) {
+        format = 'hh:mm:ss';
+    } else {
+        format = 'mm:ss';
+    }
+    let returnString = '';
+    if (e.value > 0) {
+        returnString = `${text ? `${text}: ` : ''}${TimeFormat.fromS(Math.round(e.value), format)}`;
+    }
+    return returnString;
+};
+
+export default {
+    name: 'ordersTable',
+    data() {
+        return {
+            // tooltipColors: {
+            //   Входящий: 'rgba(151, 201, 92, 0.3)',
+            //   Исходящий: 'rgba(30, 178, 245, 0.3)',
+            //   Недозвон: 'rgba(245, 127, 33, 0.3)',
+            //   Пропущенный: 'rgba(245, 86, 74, 0.3)',
+            // },
+            tooltipColors: {
+                Входящий: '#97c95c',
+                Исходящий: '#1db2f5',
+                Недозвон: '#f57f21',
+                Пропущенный: '#f5564a',
+            },
+            columns: [
+                {
+                    dataField: 'start_day',
+                    caption: 'День',
+                    // groupIndex: 0,
+                    sortOrder: 'desc',
+                }, {
+                    dataField: 'start_time',
+                    caption: 'Начало звонка',
+                    sortOrder: 'desc',
+                    // groupIndex: 0
+                }, {
+                    dataField: 'answer_time',
+                    caption: 'Скорость ответа',
+                    // groupIndex: 0
+                }, {
+                    dataField: 'call_duration',
+                    caption: 'Длительность',
+                    customizeText(e) {
+                        return formatSecondsAsHHMMSS(e);
+                    },
+                    // groupIndex: 0
+                }, {
+                    dataField: 'fail_time',
+                    caption: 'Длительность дозвона',
+                    // groupIndex: 0
+                }, {
+                    dataField: 'call_type',
+                    caption: 'Тип звонка',
+                    groupIndex: 1,
+                    cellTemplate: 'cellTemplate',
+                }, {
+                    dataField: 'person',
+                    caption: 'Сотрудник',
+                    groupIndex: 2,
+                }, {
+                    dataField: 'client',
+                    caption: 'Клиент',
+                    // groupIndex: 0
+                }, {
+                    dataField: 'line_number',
+                    caption: 'Линия',
+                    // groupIndex: 0
+                }, {
+                    dataField: 'records',
+                    caption: 'Записи',
+                    // groupIndex: 0
+                }],
+        };
+    },
+    components: {
+        DxColumn,
+        DxGroupPanel,
+        DxGrouping,
+        DxPaging,
+        DxSearchPanel,
+        DxDataGrid,
+        // DxFormat,
+        DxPager,
+        // DxSummary,
+        // DxGroupItem,
+        // DxSortByGroupSummaryInfo,
+        // DxTotalItem,
+        DxFilterRow,
+        DxHeaderFilter,
+        DxExport,
+
+    },
+    created() {
+        loadMessages(ruMessages);
+        locale('ru');
+    },
+    props: [
+        'dataSource',
+    ],
+    methods: {
+        formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
+        formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
+        formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
+    },
 };
 </script>
 

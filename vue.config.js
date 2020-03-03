@@ -1,6 +1,6 @@
 // vue.config.js
 module.exports = {
-  css: {
-    requireModuleExtension: false,
-  },
+    css: {
+        requireModuleExtension: false,
+    },
 };

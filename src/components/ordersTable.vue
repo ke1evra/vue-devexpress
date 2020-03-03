@@ -171,45 +171,12 @@
 <script>
 // import axios from 'axios';
 import {
-  DxDataGrid,
-  DxColumn,
-  DxGrouping,
-  DxGroupPanel,
-  DxSearchPanel,
-  DxPaging,
-  DxFormat,
-  DxPager,
-  DxSummary,
-  DxGroupItem,
-  DxSortByGroupSummaryInfo,
-  DxTotalItem,
-  DxFilterRow,
-  DxHeaderFilter,
-  DxExport,
-  DxMasterDetail,
-  DxSelection,
-
-} from 'devextreme-vue/data-grid';
-import { locale, loadMessages } from 'devextreme/localization';
-import ruMessages from 'devextreme/localization/messages/ru.json';
-import DetailTemplate from './DetailTemplate.vue';
-import { formatSecondsAsHHMMSS } from '../methods/chartHelpers';
-
-const numberWithCommas = (x, text) => {
-  const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return text ? `${text} ${formatted}` : formatted;
-};
-
-export default {
-  name: 'ordersTable',
-  components: {
-    DetailTemplate,
-    DxColumn,
-    DxGroupPanel,
-    DxGrouping,
-    DxPaging,
-    DxSearchPanel,
     DxDataGrid,
+    DxColumn,
+    DxGrouping,
+    DxGroupPanel,
+    DxSearchPanel,
+    DxPaging,
     DxFormat,
     DxPager,
     DxSummary,
@@ -221,46 +188,79 @@ export default {
     DxExport,
     DxMasterDetail,
     DxSelection,
-  },
-  data() {
-    return {
-      orderColors: {
-        Отказ: '#f5564a',
-        'Взят на сборку': '#73C3D9',
-        'Не обработан': '#bbb',
-        'Передан на склад': '#6491e8',
-        Забронирован: '#6491e8',
-        'Заказ отгружен': '#97c95c',
-        'Заказ собран и готов к выдаче': '#73C3D9',
-        Продажа: '#fbce25',
-      },
-    };
-  },
-  created() {
-    loadMessages(ruMessages);
-    locale('ru');
-  },
-  props: [
-    'dataSource',
-  ],
-  methods: {
-    formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
-    formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
-    formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
-    formatSecondsAsHHMMSS,
-    defineProceedTimeColors(val) {
-      if (val < 1800) { // полчаса
-        return 'success';
-      } if (val < 7200) {
-        return 'warning';
-      }
-      return 'danger';
+
+} from 'devextreme-vue/data-grid';
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+import DetailTemplate from './DetailTemplate.vue';
+import { formatSecondsAsHHMMSS } from '../methods/chartHelpers';
+
+const numberWithCommas = (x, text) => {
+    const formatted = Math.round(x.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return text ? `${text} ${formatted}` : formatted;
+};
+
+export default {
+    name: 'ordersTable',
+    components: {
+        DetailTemplate,
+        DxColumn,
+        DxGroupPanel,
+        DxGrouping,
+        DxPaging,
+        DxSearchPanel,
+        DxDataGrid,
+        DxFormat,
+        DxPager,
+        DxSummary,
+        DxGroupItem,
+        DxSortByGroupSummaryInfo,
+        DxTotalItem,
+        DxFilterRow,
+        DxHeaderFilter,
+        DxExport,
+        DxMasterDetail,
+        DxSelection,
     },
-    selectionChanged(e) {
-      e.component.collapseAll(-1);
-      e.component.expandRow(e.currentSelectedRowKeys[0]);
+    data() {
+        return {
+            orderColors: {
+                Отказ: '#f5564a',
+                'Взят на сборку': '#73C3D9',
+                'Не обработан': '#bbb',
+                'Передан на склад': '#6491e8',
+                Забронирован: '#6491e8',
+                'Заказ отгружен': '#97c95c',
+                'Заказ собран и готов к выдаче': '#73C3D9',
+                Продажа: '#fbce25',
+            },
+        };
     },
-  },
+    created() {
+        loadMessages(ruMessages);
+        locale('ru');
+    },
+    props: [
+        'dataSource',
+    ],
+    methods: {
+        formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
+        formatAvg(x) { return numberWithCommas(x, 'Средн:'); },
+        formatCount(x) { return numberWithCommas(x, 'Кол-во:'); },
+        formatSecondsAsHHMMSS,
+        defineProceedTimeColors(val) {
+            if (val < 1800) { // полчаса
+                return 'success';
+            } if (val < 7200) {
+                return 'warning';
+            }
+            return 'danger';
+        },
+        selectionChanged(e) {
+            e.component.collapseAll(-1);
+            e.component.expandRow(e.currentSelectedRowKeys[0]);
+        },
+    },
 };
 </script>
 

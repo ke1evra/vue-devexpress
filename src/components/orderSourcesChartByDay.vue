@@ -108,34 +108,6 @@
 
 
 import {
-  DxChart,
-  DxSeries,
-  DxArgumentAxis,
-  DxLegend,
-  DxCommonSeriesSettings,
-  DxLabel,
-  DxValueAxis,
-  // DxPane,
-  DxTooltip,
-  DxTitle,
-  DxCrosshair,
-  DxFont,
-  DxPoint,
-  DxPointHoverStyle,
-  DxExport,
-  // DxPointBorder,
-
-} from 'devextreme-vue/chart';
-
-
-import { locale, loadMessages } from 'devextreme/localization';
-import ruMessages from 'devextreme/localization/messages/ru.json';
-import moment from 'moment';
-import { customizeTooltip, custimizeTitleThousands, setTooltipColors } from '../methods/chartHelpers';
-
-export default {
-  name: 'orderSourcesChartByDay',
-  components: {
     DxChart,
     DxSeries,
     DxArgumentAxis,
@@ -152,112 +124,140 @@ export default {
     DxPointHoverStyle,
     DxExport,
     // DxPointBorder,
-  },
-  data() {
-    return {
-      type: 'stackedbar',
-      options: [
-        {
-          value: 'stackedbar',
-          text: 'Кол-во',
-          selected: true,
-        },
-        {
-          value: 'fullstackedbar',
-          text: 'Проценты',
-        },
-        {
-          value: 'splinearea',
-          text: 'splinearea',
-        },
-        {
-          value: 'stackedsplinearea',
-          text: 'stackedsplinearea',
-        },
-        {
-          value: 'fullstackedsplinearea',
-          text: 'fullstackedsplinearea',
-        },
-      ],
-      dataArray: [],
-      seriesArray: [
-        {
-          valueField: 'seo_google',
-          name: 'SEO Google',
-          color: '#5899da',
-        },
-        {
-          valueField: 'seo_yandex',
-          name: 'SEO Яндекс',
-          color: '#e8743b',
-        },
-        {
-          valueField: 'googleads',
-          name: 'Google Ads',
-          color: '#19a979',
-        },
-        {
-          valueField: 'yandexdirect',
-          name: 'Яндекс Директ',
-          color: '#ed4a7b',
-        },
-        {
-          valueField: 'yandexmarket',
-          name: 'Яндекс Маркет',
-          color: '#945ecf',
-        },
-        {
-          valueField: 'email',
-          name: 'E-mail рассылка',
-          color: '#13a4b4',
-        },
-        {
-          valueField: 'seo_mailru',
-          color: '#525df4',
-          name: 'SEO mail.ru',
-        },
-        {
-          valueField: 'seo_bing',
-          color: '#bf399e',
-          name: 'SEO Bing',
-        },
-        {
-          valueField: 'seo_yahoo',
-          name: 'SEO Yahoo',
-          color: '#ee6868',
-        },
-        {
-          valueField: 'seo_rambler',
-          name: 'SEO Рамблер',
-          color: '#2f6497',
-        },
-        {
-          valueField: 'other',
-          name: 'Другой',
-          color: '#777',
-        },
-        {
-          valueField: 'unknown',
-          name: 'Не определен',
-          color: '#999',
-        },
-      ],
-      tooltipColors: null,
-    };
-  },
-  props: [
-    'dataSourceUrl',
-  ],
-  created() {
-    loadMessages(ruMessages);
-    locale('ru');
-    moment.locale('ru');
-    this.tooltipColors = setTooltipColors(this.seriesArray);
-  },
-  methods: {
-    customizeTooltip,
-    custimizeTitleThousands,
-  },
+
+} from 'devextreme-vue/chart';
+
+
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+import moment from 'moment';
+import { customizeTooltip, custimizeTitleThousands, setTooltipColors } from '../methods/chartHelpers';
+
+export default {
+    name: 'orderSourcesChartByDay',
+    components: {
+        DxChart,
+        DxSeries,
+        DxArgumentAxis,
+        DxLegend,
+        DxCommonSeriesSettings,
+        DxLabel,
+        DxValueAxis,
+        // DxPane,
+        DxTooltip,
+        DxTitle,
+        DxCrosshair,
+        DxFont,
+        DxPoint,
+        DxPointHoverStyle,
+        DxExport,
+        // DxPointBorder,
+    },
+    data() {
+        return {
+            type: 'stackedbar',
+            options: [
+                {
+                    value: 'stackedbar',
+                    text: 'Кол-во',
+                    selected: true,
+                },
+                {
+                    value: 'fullstackedbar',
+                    text: 'Проценты',
+                },
+                {
+                    value: 'splinearea',
+                    text: 'splinearea',
+                },
+                {
+                    value: 'stackedsplinearea',
+                    text: 'stackedsplinearea',
+                },
+                {
+                    value: 'fullstackedsplinearea',
+                    text: 'fullstackedsplinearea',
+                },
+            ],
+            dataArray: [],
+            seriesArray: [
+                {
+                    valueField: 'seo_google',
+                    name: 'SEO Google',
+                    color: '#5899da',
+                },
+                {
+                    valueField: 'seo_yandex',
+                    name: 'SEO Яндекс',
+                    color: '#e8743b',
+                },
+                {
+                    valueField: 'googleads',
+                    name: 'Google Ads',
+                    color: '#19a979',
+                },
+                {
+                    valueField: 'yandexdirect',
+                    name: 'Яндекс Директ',
+                    color: '#ed4a7b',
+                },
+                {
+                    valueField: 'yandexmarket',
+                    name: 'Яндекс Маркет',
+                    color: '#945ecf',
+                },
+                {
+                    valueField: 'email',
+                    name: 'E-mail рассылка',
+                    color: '#13a4b4',
+                },
+                {
+                    valueField: 'seo_mailru',
+                    color: '#525df4',
+                    name: 'SEO mail.ru',
+                },
+                {
+                    valueField: 'seo_bing',
+                    color: '#bf399e',
+                    name: 'SEO Bing',
+                },
+                {
+                    valueField: 'seo_yahoo',
+                    name: 'SEO Yahoo',
+                    color: '#ee6868',
+                },
+                {
+                    valueField: 'seo_rambler',
+                    name: 'SEO Рамблер',
+                    color: '#2f6497',
+                },
+                {
+                    valueField: 'other',
+                    name: 'Другой',
+                    color: '#777',
+                },
+                {
+                    valueField: 'unknown',
+                    name: 'Не определен',
+                    color: '#999',
+                },
+            ],
+            tooltipColors: null,
+        };
+    },
+    props: [
+        'dataSourceUrl',
+    ],
+    created() {
+        loadMessages(ruMessages);
+        locale('ru');
+        moment.locale('ru');
+        this.tooltipColors = setTooltipColors(this.seriesArray);
+    },
+    methods: {
+        customizeTooltip,
+        custimizeTitleThousands,
+    },
 };
 </script>
 

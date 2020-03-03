@@ -32,44 +32,44 @@ import { DxDataGrid, DxColumn } from 'devextreme-vue/data-grid';
 
 
 export default {
-  name: 'DetailTemplate',
-  components: { DxDataGrid, DxColumn },
-  props: [
-    'client',
-  ],
-  data() {
-    return {
-      dataSource: `http://185.176.25.157:3000/calls/client?number=${this.client}`,
-      columns: [{
-        dataField: 'start_day',
-        caption: 'День',
-      }, {
-        dataField: 'start_time',
-        caption: 'Время',
-      }, {
-      //   dataField: 'call_type',
-      //   caption: 'Тип звонка',
-      // }, {
-        dataField: 'person',
-        caption: 'Менеджер',
-      }, {
-        dataField: 'answer_time',
-        caption: 'Скорость ответа',
-      }, {
-        dataField: 'call_duration',
-        caption: 'Продолжительность звонка',
-      }, {
-        dataField: 'line_number',
-        caption: 'Входящая линия',
-      }],
-      callsColors: {
-        Входящий: '#97c95c',
-        Исходящий: '#1db2f5',
-        Недозвон: '#f57f21',
-        Пропущенный: '#f5564a',
-      },
-    };
-  },
+    name: 'DetailTemplate',
+    components: { DxDataGrid, DxColumn },
+    props: [
+        'client',
+    ],
+    data() {
+        return {
+            dataSource: `http://185.176.25.157:3000/calls/client?number=${this.client}`,
+            columns: [{
+                dataField: 'start_day',
+                caption: 'День',
+            }, {
+                dataField: 'start_time',
+                caption: 'Время',
+            }, {
+                //   dataField: 'call_type',
+                //   caption: 'Тип звонка',
+                // }, {
+                dataField: 'person',
+                caption: 'Менеджер',
+            }, {
+                dataField: 'answer_time',
+                caption: 'Скорость ответа',
+            }, {
+                dataField: 'call_duration',
+                caption: 'Продолжительность звонка',
+            }, {
+                dataField: 'line_number',
+                caption: 'Входящая линия',
+            }],
+            callsColors: {
+                Входящий: '#97c95c',
+                Исходящий: '#1db2f5',
+                Недозвон: '#f57f21',
+                Пропущенный: '#f5564a',
+            },
+        };
+    },
 
 };
 </script>
