@@ -1,78 +1,104 @@
 <template>
-  <div class="row">
-    <div v-for="(month, i) of daysByMonth" v-bind:key="month"
-         v-bind:class="`col-md-1`"
-         >
-      <h5>Месяц {{i}}</h5>
-      <div class="row mx-0">
-        <div class="days-container" v-for="day of month" v-bind:key="day" >
-          <span v-bind:class=
-                  "'w-100 d-inline-block text-center ' +
-                  (day.weekDay >5 ? 'text-danger' : '')"
-          >
-            {{day.day}}
-          </span>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col-6" >
+                    <h5>Сегодня</h5>
+                    {{todayRange.pretty()}}
+                </div>
+                <div class="col-6" >
+                    <h5>Последние 7 дней</h5>
+                    {{last7DaysRange.pretty()}}
+                </div>
+                <div class="col-6" >
+                    <h5>Последние 30 дней</h5>
+                    {{last30DaysRange.pretty()}}
+                </div>
+                <div class="col-6" >
+                    <h5>Последние 265 дней</h5>
+                    <simple-data-grid v-bind:dataSource="last365DaysData"/>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="col">
-      {{daysArray}}
-    </div>
-  </div>
 </template>
 
 <script>
 import moment from 'moment';
+import axios from 'axios';
+import { API_URL } from '../config';
+import SimpleDataGrid from '../components/tables/SimpleDataGrid.vue';
+
+function DateRange(from = moment().startOf('day').toDate(), to = moment().endOf('day').toDate()) {
+    this.from = from;
+    this.to = to;
+    const DateTime = 'YYYY-MM-DD HH:mm:ss';
+    this.pretty = function () {
+        return {
+            from: moment(this.from).format(DateTime),
+            to: moment(this.to).format(DateTime),
+        };
+    };
+}
+
+const getGroupedOrderDataFromECcrm = async (from, to, shop, groupBy) => {
+    const url = `${API_URL}/orders/${groupBy}?date_from=${from}&date_to=${to}&shop=${shop}`;
+    return axios.get(url).then(data => data).catch(e => console.log(e));
+};
+
+const getOrderByMonthData = async (from, to, shop) => getGroupedOrderDataFromECcrm(from, to, shop, 'month');
 
 export default {
     name: 'Test',
+    components: { SimpleDataGrid },
     data() {
         return {
-            daysArray: this.buildDaysArray('01-01-2020', '12-31-2020'),
-            daysByMonth: this.buildDaysByMonth(this.daysArray),
-            today: moment().format('DD-MM-YYYY'),
-            startOfYear: moment().startOf('year').format('DD-MM-YYYY'),
+            shop: 1,
+            data: null,
+            todayRange: new DateRange(),
+            last7DaysRange: new DateRange(),
+            last30DaysRange: new DateRange(),
+            last365DaysRange: new DateRange(),
+            todayData: null,
+            last7DaysData: null,
+            last30DaysData: null,
+            last365DaysData: null,
         };
     },
     methods: {
-        buildDaysArray(start, end) {
-            const returnArray = [];
-            const endDate = moment(end).toDate();
-            let startDate = moment(start).startOf('year').toDate();
-            console.log(endDate, startDate);
-            while (startDate < endDate) {
-                returnArray.push({
-                    day: moment(startDate).format('D'),
-                    month: moment(startDate).format('M'),
-                    year: moment(startDate).format('YYYY'),
-                    weekDay: moment(startDate).format('E'),
-                });
-                startDate = moment(startDate).add(1, 'day').toDate();
-                console.log(endDate, startDate);
-            }
+        showTime() {
+            return moment().format('YYYY-MM-DD HH:mm:ss');
+        },
+        setRange(range, from, to) {
+            const selectedRange = range;
+            selectedRange.from = from;
+            selectedRange.to = to;
+            return selectedRange;
+        },
+        async setRangeLastNDays(range, n) {
+            const from = moment().subtract(n, 'days').startOf('day').toDate();
+            const to = moment().endOf('day').toDate();
+            this.setRange(range, from, to);
+            return range.pretty();
+        },
+        setRangeLast7days(range) {
+            this.setRangeLastNDays(range, 7);
+        },
+        setRangeLast30days(range) {
+            this.setRangeLastNDays(range, 30);
+        },
+        setRangeLast365days(range) {
+            return this.setRangeLastNDays(range, 365);
+        },
+
+    },
+    mounted() {
+        this.setRangeLast7days(this.last7DaysRange);
+        this.setRangeLast30days(this.last30DaysRange);
+        this.setRangeLast365days(this.last365DaysRange)
+            .then(range => getOrderByMonthData(range.from, range.to, this.shop))
             // eslint-disable-next-line no-return-assign
-            return this.daysArray = returnArray;
-        },
-        buildDaysByMonth(daysArray) {
-            return daysArray.reduce((accum, current) => {
-                if (!accum[current.month]) {
-                    // eslint-disable-next-line no-param-reassign
-                    accum[current.month] = [];
-                }
-                if (current.day < 2 && current.weekDay > 1) {
-                    console.log(current.day, current.weekDay);
-                    let offset = current.weekDay;
-                    while (offset > 1) {
-                        accum[current.month].push({ type: 'empty' });
-                        // eslint-disable-next-line no-plusplus
-                        offset--;
-                    }
-                }
-                accum[current.month].push(current);
-                console.log(accum);
-                return accum;
-            }, {});
-        },
+            .then(response => this.last365DaysData = response.data);
     },
 };
 </script>
