@@ -4,18 +4,18 @@
             <div class="row">
                 <div class="col-6" >
                     <h5>Сегодня</h5>
-                    {{todayRange.pretty()}}
+                    <simple-data-grid v-bind:dataSource="todayData"/>
                 </div>
                 <div class="col-6" >
                     <h5>Последние 7 дней</h5>
-                    {{last7DaysRange.pretty()}}
+                    <simple-data-grid v-bind:dataSource="last7DaysData"/>
                 </div>
                 <div class="col-6" >
                     <h5>Последние 30 дней</h5>
-                    {{last30DaysRange.pretty()}}
+                    <simple-data-grid v-bind:dataSource="last30DaysData"/>
                 </div>
                 <div class="col-6" >
-                    <h5>Последние 265 дней</h5>
+                    <h5>Последние 365 дней</h5>
                     <simple-data-grid v-bind:dataSource="last365DaysData"/>
                 </div>
             </div>
@@ -43,10 +43,13 @@ function DateRange(from = moment().startOf('day').toDate(), to = moment().endOf(
 
 const getGroupedOrderDataFromECcrm = async (from, to, shop, groupBy) => {
     const url = `${API_URL}/orders/${groupBy}?date_from=${from}&date_to=${to}&shop=${shop}`;
+    console.log(`url: ${url}`);
     return axios.get(url).then(data => data).catch(e => console.log(e));
 };
 
 const getOrderByMonthData = async (from, to, shop) => getGroupedOrderDataFromECcrm(from, to, shop, 'month');
+const getOrderByDayData = async (from, to, shop) => getGroupedOrderDataFromECcrm(from, to, shop, 'day');
+const getOrderByHourData = async (from, to, shop) => getGroupedOrderDataFromECcrm(from, to, shop, 'hour');
 
 export default {
     name: 'Test',
@@ -81,11 +84,17 @@ export default {
             this.setRange(range, from, to);
             return range.pretty();
         },
+        async setRangeLast24hours(range) {
+            const from = moment().subtract(24, 'hours').startOf('hour').toDate();
+            const to = moment().endOf('hour').toDate();
+            this.setRange(range, from, to);
+            return range.pretty();
+        },
         setRangeLast7days(range) {
-            this.setRangeLastNDays(range, 7);
+            return this.setRangeLastNDays(range, 7);
         },
         setRangeLast30days(range) {
-            this.setRangeLastNDays(range, 30);
+            return this.setRangeLastNDays(range, 30);
         },
         setRangeLast365days(range) {
             return this.setRangeLastNDays(range, 365);
@@ -93,8 +102,21 @@ export default {
 
     },
     mounted() {
-        this.setRangeLast7days(this.last7DaysRange);
-        this.setRangeLast30days(this.last30DaysRange);
+        this.setRangeLast24hours(this.todayRange)
+            .then(range => getOrderByHourData(range.from, range.to, this.shop))
+            // eslint-disable-next-line no-return-assign
+            .then(response => this.todayData = response.data);
+
+        this.setRangeLast7days(this.last7DaysRange)
+            .then(range => getOrderByDayData(range.from, range.to, this.shop))
+            // eslint-disable-next-line no-return-assign
+            .then(response => this.last7DaysData = response.data);
+
+        this.setRangeLast30days(this.last30DaysRange)
+            .then(range => getOrderByDayData(range.from, range.to, this.shop))
+            // eslint-disable-next-line no-return-assign
+            .then(response => this.last30DaysData = response.data);
+
         this.setRangeLast365days(this.last365DaysRange)
             .then(range => getOrderByMonthData(range.from, range.to, this.shop))
             // eslint-disable-next-line no-return-assign
