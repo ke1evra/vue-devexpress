@@ -87,12 +87,10 @@ export default {
         onCopy() {
             /* eslint-disable-next-line */
             const copyToClipboardMessage = this.$refs.copyToClipboardMessage;
-            console.log(copyToClipboardMessage);
             /* eslint-disable-line */
             copyToClipboardMessage.style.opacity = '1';
             setTimeout(() => {
                 copyToClipboardMessage.style.opacity = '0';
-                console.log('****');
             }, 1000);
         },
     },
