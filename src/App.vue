@@ -19,6 +19,9 @@
             <b-nav-item to="/calls" exact exact-active-class="active">Коллцентр</b-nav-item>
             <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
             <b-nav-item to="/expenses" exact exact-active-class="active">Расход</b-nav-item>
+            <b-nav-item to="/callsMonitoring" exact exact-active-class="active">
+                CallsMonitoring</b-nav-item>
+            <b-nav-item to="/storage" exact exact-active-class="active">Storage</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>

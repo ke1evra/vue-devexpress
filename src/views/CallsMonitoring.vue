@@ -1,0 +1,105 @@
+<template>
+    <div class='callsMonitoring'>
+        <h2>Calls monitoring page</h2>
+        <div class="row">
+            <div v-if='!dataSource || loadData'>
+                <div class='preloader'>
+                    <div class='preloaderChild bounce-1'></div>
+                    <div class='preloaderChild bounce-2'></div>
+                </div>
+            </div>
+            <calendar
+                @calendarChange='reloadData'
+                :disabled='!dataSource || loadData'
+            />
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <timelineChart v-if='dataSource'
+                title='Хронология звонков'
+                :dataSource='dataSource'
+                argumentField='person'
+                rangeValue1Field='startFix'
+                rangeValue2Field='endFix'
+                seriesTemplateNameField='call_type'
+                />
+            </div>
+        </div>
+
+        <missedCalls
+            v-if='dataSource'
+            :missedCalls='missedCalls'
+        />
+        </div>
+</template>
+
+<script>
+import calendar from '../components/calendar.vue';
+import timelineChart from '../components/charts/timelineChart.vue';
+import missedCalls from '../components/missedCallsHistory.vue';
+import fetchData from '../components/model/common';
+
+const moment = require('moment');
+const nameNumberAccordance = require('../data/vks_numbers.js');
+
+const API_URI = 'http://185.176.25.157:3000/mango/day';
+
+export default {
+    name: 'callsMonitoring',
+    components: {
+        calendar,
+        timelineChart,
+        missedCalls,
+    },
+    data() {
+        return {
+            date: moment(),
+            dataSource: null,
+            loadData: true,
+            missedCalls: null,
+        };
+    },
+    methods: {
+        async getData(date) {
+            const dayStart = moment(date).startOf('day').unix();
+            const dayEnd = moment(date).endOf('day').unix();
+
+            let data = await fetchData(API_URI, dayStart, dayEnd);
+            this.missedCalls = data.missedCalls;
+
+            data = data.data1;
+            if (data) {
+                data = data.map((line) => {
+                    /* eslint-disable */
+                    const name = nameNumberAccordance[line.person] ? nameNumberAccordance[line.person] : line.person;
+                    line.person = name;
+                    return line;
+                    /* eslint-enable */
+                });
+            }
+
+            return data;
+        },
+        async reloadData(newDate) {
+            this.loadData = true;
+            this.getData(newDate)
+                .then((data) => {
+                    this.dataSource = data;
+                    this.loadData = false;
+                });
+        },
+    },
+    mounted() {
+        this.getData(this.date)
+            .then((data) => {
+                this.dataSource = data;
+                this.loadData = false;
+            });
+    },
+};
+</script>
+
+<style scoped lang='scss'>
+@import '../common/common.scss';
+</style>
