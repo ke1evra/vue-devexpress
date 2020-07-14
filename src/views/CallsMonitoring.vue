@@ -66,7 +66,11 @@ export default {
             const dayEnd = moment(date).endOf('day').unix();
 
             let data = await fetchData(API_URI, dayStart, dayEnd);
-            this.missedCalls = data.missedCalls;
+            this.missedCalls = data.missedCalls.map((line) => {
+                // eslint-disable-next-line
+                line.copyMessage = line.number;
+                return line;
+            });
 
             data = data.data1;
             if (data) {

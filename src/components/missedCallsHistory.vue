@@ -1,18 +1,14 @@
 <template>
     <div class="missedCalls">
         <h2>Missed calls</h2>
-        <div class="copyToClipboardMessage" ref='copyToClipboardMessage'>
-            You copied number to clipboard
-        </div>
-
         <div class='callsList'>
             <b-button-group class='mb-1 listNumber' variant='danger'
                 :key='number.number' v-for="number in missedCalls">
                 <b-button :variant='getButtonColorClass(number)'
                     v-clipboard:copy='number.number'
-                    v-clipboard:success='onCopy'
+                    v-clipboard:success='onCopy(number)'
                 >
-                    {{ number.number }}
+                    {{ number.copyMessage }}
                 </b-button>
                 <b-dropdown :variant='getButtonColorClass(number)'>
                     <b-dropdown-item :href="`https://ec-crm.ru/orders/filter_template?client_phone=${number.number}`"
@@ -84,14 +80,12 @@ export default {
 
             return colorClass;
         },
-        onCopy() {
-            /* eslint-disable-next-line */
-            const copyToClipboardMessage = this.$refs.copyToClipboardMessage;
-            /* eslint-disable-line */
-            copyToClipboardMessage.style.opacity = '1';
-            setTimeout(() => {
-                copyToClipboardMessage.style.opacity = '0';
-            }, 1000);
+        // eslint-disable-next-line
+        onCopy(number) {
+            return () => {
+                // eslint-disable-next-line
+                number.copyMessage = 'Copied';
+            };
         },
     },
 };
@@ -100,21 +94,5 @@ export default {
 <style scoped lang='scss'>
 .listNumber {
     margin-right: 5px;
-}
-
-.copyToClipboardMessage {
-    height: 100px;
-    width: 250px;
-    position: fixed;
-    right: 12%;
-    top: 10%;
-    font-size: 20px;
-    background-color: #303030;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s;
 }
 </style>
