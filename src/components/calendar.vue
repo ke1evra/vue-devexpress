@@ -1,29 +1,59 @@
 <template>
   <div id="calendar-demo">
-    <div class="widget-container">
-      <DxDropDownBox class='dropDownButton'
-        :value='currentDay'
+    <div class="row pb-1">
+      <div class="col-1 firstLine">
+        <the-mask
+          :mask="'##.##.####'"
+          class="form-control mr-1 text-center"
+          placeholder="DD.MM.YYYY"
+          v-model="currentDay"
+          style="width: 120px;"
+          v-b-popover.hover.bottom="'Choose day'"
+        />
+      </div>
+    </div>
+    <div class="row pb-3">
+      <div class="col">
+        <b-button
+          class='submitButton'
+          variant="primary"
+          v-on:click="submitClick"
+          v-b-popover.hover.bottom="'Apply this date'"
         >
-          <DxCalendar
-            id="calendar-container"
-            v-model="currentValue"
-            :min="minDateValue"
-            :max="maxDateValue"
-            :disabled-dates="disabledDates"
-            :first-day-of-week="firstDay"
-            :disabled="disabled"
-            :zoom-level="zoomLevel"
-            :cell-template="cellTemplate"
-            :showTodayButton='true'
-            @value-changed="calendarChange"
+          <b-spinner
+            v-if="loading"
+            variant="white"
+            small label="Small Spinner my-auto"
+          >&nbsp;</b-spinner>
+          Apply
+        </b-button>
+        <div class="widget-container">
+          <b-dropdown
+          variant-primary
           >
-            <template #custom="{ data: cell }">
-              <span :class="getCellCssClass(cell.date)">
-                {{ cell.text }}
-              </span>
-            </template>
-          </DxCalendar>
-      </DxDropDownBox>
+            <DxCalendar
+              id="calendar-container"
+              v-model="currentValue"
+              :min="minDateValue"
+              :max="maxDateValue"
+              :disabled-dates="disabledDates"
+              :first-day-of-week="firstDay"
+              :disabled="disabled"
+              :zoom-level="zoomLevel"
+              :cell-template="cellTemplate"
+              :showTodayButton='true'
+              :min-zoom-level='minZoomLevel'
+              @value-changed="calendarChange"
+            >
+              <template #custom="{ data: cell }">
+                <span :class="getCellCssClass(cell.date)">
+                  {{ cell.text }}
+                </span>
+              </template>
+            </DxCalendar>
+          </b-dropdown>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,15 +61,15 @@
 <script>
 import {
     DxCalendar,
-    DxDropDownBox,
 } from 'devextreme-vue';
+import { TheMask } from 'vue-the-mask';
 
 const moment = require('moment');
 
 export default {
     components: {
         DxCalendar,
-        DxDropDownBox,
+        TheMask,
     },
     data() {
         return {
@@ -53,20 +83,33 @@ export default {
             zoomLevel: 'month',
             now: moment(),
             currentDay: moment().format('DD.MM.YYYY'),
+            minZoomLevel: 'month',
         };
     },
-    props: ['disabled'],
+    props: ['disabled', 'loading'],
     methods: {
         calendarChange(e) {
             this.currentDay = moment(e.value).format('DD.MM.YYYY');
             this.$emit('calendarChange', e.value);
+        },
+        submitClick() {
+            const currentDateLine = this.currentDay.replace(/\./g, '');
+
+            const day = currentDateLine.substring(0, 2);
+            const month = currentDateLine.substring(2, 4);
+            const year = currentDateLine.substring(4);
+
+            const resultDateLine = `${year}.${month}.${day}`;
+            this.$emit('calendarChange', new Date(resultDateLine));
         },
     },
 };
 </script>
 <style scoped>
 .widget-container {
-    margin-right: 320px;
+  display: inline-block;
+  position: relative;
+  left: 15px;
 }
 
 #calendar-container {
@@ -115,8 +158,17 @@ export default {
 }
 
 .dropDownButton {
-    width: 250px;
     height: 30px;
     margin-left: 20px;
+}
+
+.submitButton {
+  position: relative;
+  left: 10px;
+}
+
+.firstLine {
+  position: relative;
+  left: 10px;
 }
 </style>

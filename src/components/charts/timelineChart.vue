@@ -53,7 +53,7 @@
             }'/>
         </DxCommonSeriesSettings>
         <DxSeriesTemplate :name-field="seriesTemplateNameField"
-        :customizeSeries='this.customizeSeries'
+        :customizeSeries='customizeSeriesBool ? customizeSeries : null'
         />
         <DxAnimation :enabled="false"/>
         <DxLegend
@@ -123,6 +123,7 @@ export default {
         'rangeValue1Field',
         'rangeValue2Field',
         'seriesTemplateNameField',
+        'customizeSeriesBool',
     ],
     data() {
         return {

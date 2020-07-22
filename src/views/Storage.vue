@@ -11,6 +11,7 @@
             <calendar
                 @calendarChange='reloadData'
                 :disabled='!dataSource || loadData'
+                :loading='!dataSource || loadData'
             />
         </div>
 

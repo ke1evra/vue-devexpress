@@ -11,6 +11,7 @@
             <calendar
                 @calendarChange='reloadData'
                 :disabled='!dataSource || loadData'
+                :loading='!dataSource || loadData'
             />
         </div>
 
@@ -23,6 +24,7 @@
                 rangeValue1Field='startFix'
                 rangeValue2Field='endFix'
                 seriesTemplateNameField='call_type'
+                customizeSeriesBool='true'
                 />
             </div>
         </div>
