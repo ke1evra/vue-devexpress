@@ -52,7 +52,9 @@
                 visible: false,
             }'/>
         </DxCommonSeriesSettings>
-        <DxSeriesTemplate :name-field="seriesTemplateNameField" />
+        <DxSeriesTemplate :name-field="seriesTemplateNameField"
+        :customizeSeries='this.customizeSeries'
+        />
         <DxAnimation :enabled="false"/>
         <DxLegend
           vertical-alignment="bottom"
@@ -146,6 +148,31 @@ export default {
             return {
                 text: tooltip,
             };
+        },
+        customizeSeries(nameField) {
+            const colorScheme = {
+                name: '',
+                color: '',
+            };
+
+            if (nameField === 'inComing') {
+                colorScheme.name = 'Входящие';
+                colorScheme.color = '#97c95c';
+            }
+            if (nameField === 'outComing') {
+                colorScheme.name = 'Исходящие';
+                colorScheme.color = '#1db2f5';
+            }
+            if (nameField === 'inComingFail') {
+                colorScheme.name = 'Пропущенные';
+                colorScheme.color = '#c90515';
+            }
+            if (nameField === 'outComingFail') {
+                colorScheme.name = 'Недозвон';
+                colorScheme.color = '#f57f21';
+            }
+
+            return colorScheme;
         },
     },
 };

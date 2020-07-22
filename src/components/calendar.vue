@@ -61,7 +61,6 @@ export default {
             this.currentDay = moment(e.value).format('DD.MM.YYYY');
             this.$emit('calendarChange', e.value);
         },
-
     },
 };
 </script>
