@@ -25,7 +25,8 @@
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
-              <b-form-select v-model="themeHelper.theme">
+              <b-form-select v-model="currentTheme"
+              @change='changeTheme'>
                 <option value="light">Светлая</option>
                 <option value="dark">Темная</option>
               </b-form-select>
@@ -37,56 +38,13 @@
     <div class="container-fluid pt-3">
       <div class="row">
         <div class="col">
-          <router-view />
+          <router-view :key='routerKey'/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-// eslint-disable-next-line func-names
-const ThemeHelper = function () {
-    const preloadTheme = (href) => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
-
-        return new Promise((resolve, reject) => {
-            link.onload = (e) => {
-                const { sheet } = e.target;
-                sheet.disabled = true;
-                resolve(sheet);
-            };
-            link.onerror = reject;
-        });
-    };
-
-    const selectTheme = (themes, name) => {
-        if (name && !themes[name]) {
-            throw new Error(`"${name}" has not been defined as a theme.`);
-        }
-        // eslint-disable-next-line no-param-reassign,no-return-assign
-        Object.keys(themes).forEach(n => (themes[n].disabled = n !== name));
-    };
-
-    const themes = {};
-
-    return {
-    // eslint-disable-next-line no-return-assign
-        add(name, href) {
-            // eslint-disable-next-line no-return-assign
-            return preloadTheme(href).then(s => (themes[name] = s));
-        },
-        set theme(name) {
-            selectTheme(themes, name);
-        },
-        get theme() {
-            return Object.keys(themes).find(n => !themes[n].disabled);
-        },
-    };
-};
-
 export default {
     data() {
         return {
@@ -94,20 +52,39 @@ export default {
                 light: '/css/light.css',
                 dark: '/css/dark.css',
             },
-            themeHelper: new ThemeHelper(),
-            loading: true,
+            currentTheme: 'dark',
+            changeTheme: this.themeHelper(),
+            routerKey: 1,
         };
     },
     created() {
-    // add/load themes
-    // eslint-disable-next-line max-len
-        const added = Object.keys(this.themes).map(name => this.themeHelper.add(name, this.themes[name]));
+        this.changeTheme('dark');
+    },
+    methods: {
+        themeHelper() {
+            let currentLink = null;
 
-        // eslint-disable-next-line no-unused-vars
-        Promise.all(added).then((sheets) => {
-            this.loading = false;
-            this.themeHelper.theme = 'dark';
-        });
+            return (themeName) => {
+                const href = this.themes[themeName];
+                const link = document.createElement('link');
+                link.id = 'stylesLink';
+
+                if (currentLink) {
+                    currentLink.remove();
+                }
+                currentLink = link;
+
+                link.rel = 'stylesheet';
+                link.href = href;
+
+                this.currentTheme = themeName;
+
+                document.head.appendChild(link);
+                link.onload = () => {
+                    this.routerKey += 1;
+                };
+            };
+        },
     },
 };
 </script>
@@ -116,7 +93,6 @@ export default {
   /*@import "assets/scss/custom.scss";*/
   @import "~devextreme/dist/css/dx.common.css";
   @import "~devextreme/dist/css/dx.light.compact.css";
-  /*@import '~devextreme/dist/css/dx.dark.compact.css';*/
   @import "~bootstrap/scss/bootstrap.scss";
   @import "~bootstrap-vue/src/index.scss";
 </style>
