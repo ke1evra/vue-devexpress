@@ -9,9 +9,11 @@
       @selection-changed="selectionChanged"
     >
       <DxSelection mode="single"/>
+      <DxColumnChooser
+        :enabled="true"
+      />
       <DxExport
         :enabled="true"
-        :allow-export-selected-data="true"
       />
       <DxFilterRow
         :visible="true"
@@ -36,6 +38,16 @@
         data-field="order_number"
         caption="Номер заказа"
         cell-template="cellTemplateOrderNumber"
+      />
+      <DxColumn
+        data-field="tracking_number"
+        caption="Номер отслеживания"
+        :visible="false"
+      />
+      <DxColumn
+        data-field="order_source"
+        caption="Источник заказа"
+        :visible="false"
       />
       <DxColumn
         name="month"
@@ -84,6 +96,7 @@
       <DxColumn
         data-field="otkaz_title"
         caption="Причина отказа"
+        :visible="false"
       />
       <DxColumn
         data-field="email"
@@ -173,6 +186,7 @@
 import {
     DxDataGrid,
     DxColumn,
+    DxColumnChooser,
     DxGrouping,
     DxGroupPanel,
     DxSearchPanel,
@@ -205,6 +219,7 @@ export default {
     components: {
         DetailTemplate,
         DxColumn,
+        DxColumnChooser,
         DxGroupPanel,
         DxGrouping,
         DxPaging,
