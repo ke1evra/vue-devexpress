@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col">
-            <div class="row">
+            <div class="row pb-3">
                 <div class="col-2">
                     <label>Тип отображения данных</label>
                     <b-form inline>
