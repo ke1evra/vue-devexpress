@@ -1,7 +1,7 @@
 <template>
   <div id="calendar-demo">
     <div class="row pb-1">
-      <div class="col-1 firstLine">
+      <div class="col-6 firstLine">
         <the-mask
           :mask="'##.##.####'"
           class="form-control mr-1 text-center"
@@ -11,48 +11,47 @@
           v-b-popover.hover.bottom="'Choose day'"
         />
       </div>
+      <div class="widget-container">
+          <b-dropdown text="Выбрать дату" variant-primary>
+              <DxCalendar
+                  id="calendar-container"
+                  v-model="currentValue"
+                  :min="minDateValue"
+                  :max="maxDateValue"
+                  :disabled-dates="disabledDates"
+                  :first-day-of-week="firstDay"
+                  :disabled="disabled"
+                  :zoom-level="zoomLevel"
+                  :cell-template="cellTemplate"
+                  :showTodayButton='true'
+                  :min-zoom-level='minZoomLevel'
+                  @value-changed="calendarChange"
+              >
+                  <template #custom="{ data: cell }">
+                <span :class="getCellCssClass(cell.date)">
+                  {{ cell.text }}
+                </span>
+                  </template>
+              </DxCalendar>
+          </b-dropdown>
+      </div>
     </div>
     <div class="row pb-3">
       <div class="col">
         <b-button
           class='submitButton'
           variant="primary"
+          style="width: 120px;"
           v-on:click="submitClick"
-          v-b-popover.hover.bottom="'Apply this date'"
+          v-b-popover.hover.bottom="'Применить выбранную дату'"
         >
           <b-spinner
             v-if="loading"
             variant="white"
             small label="Small Spinner my-auto"
           >&nbsp;</b-spinner>
-          Apply
+          Применить
         </b-button>
-        <div class="widget-container">
-          <b-dropdown
-          variant-primary
-          >
-            <DxCalendar
-              id="calendar-container"
-              v-model="currentValue"
-              :min="minDateValue"
-              :max="maxDateValue"
-              :disabled-dates="disabledDates"
-              :first-day-of-week="firstDay"
-              :disabled="disabled"
-              :zoom-level="zoomLevel"
-              :cell-template="cellTemplate"
-              :showTodayButton='true'
-              :min-zoom-level='minZoomLevel'
-              @value-changed="calendarChange"
-            >
-              <template #custom="{ data: cell }">
-                <span :class="getCellCssClass(cell.date)">
-                  {{ cell.text }}
-                </span>
-              </template>
-            </DxCalendar>
-          </b-dropdown>
-        </div>
       </div>
     </div>
   </div>

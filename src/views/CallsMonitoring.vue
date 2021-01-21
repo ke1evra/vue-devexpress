@@ -1,6 +1,6 @@
 <template>
     <div class='callsMonitoring'>
-        <h2>Calls monitoring page</h2>
+        <h2>Страница мониторинга звонков</h2>
         <div class="row">
             <div v-if='!dataSource || loadData'>
                 <div class='preloader'>
