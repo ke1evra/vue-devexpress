@@ -89,7 +89,40 @@
 <script>
 
 
-    import {
+import {
+    DxChart,
+    DxSeries,
+    DxArgumentAxis,
+    DxLegend,
+    DxCommonSeriesSettings,
+    DxLabel,
+    DxValueAxis,
+    // DxPane,
+    DxTooltip,
+    DxTitle,
+    DxCrosshair,
+    DxFont,
+    DxPoint,
+    DxPointHoverStyle,
+    DxExport,
+    // DxPointBorder,
+
+} from 'devextreme-vue/chart';
+
+
+import { locale, loadMessages } from 'devextreme/localization';
+import ruMessages from 'devextreme/localization/messages/ru.json';
+import moment from 'moment';
+
+const numberWithCommas = (x, text) => {
+    const value = x.value ? x.value : x;
+    const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
+    return text ? `${text} ${formatted}` : formatted;
+};
+
+export default {
+    name: 'callsByDayChart',
+    components: {
         DxChart,
         DxSeries,
         DxArgumentAxis,
@@ -106,86 +139,53 @@
         DxPointHoverStyle,
         DxExport,
         // DxPointBorder,
-
-    } from 'devextreme-vue/chart';
-
-
-    import { locale, loadMessages } from 'devextreme/localization';
-    import ruMessages from 'devextreme/localization/messages/ru.json';
-    import moment from 'moment';
-
-    const numberWithCommas = (x, text) => {
-        const value = x.value ? x.value : x;
-        const formatted = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&nbsp;');
-        return text ? `${text} ${formatted}` : formatted;
-    };
-
-    export default {
-        name: 'callsByDayChart',
-        components: {
-            DxChart,
-            DxSeries,
-            DxArgumentAxis,
-            DxLegend,
-            DxCommonSeriesSettings,
-            DxLabel,
-            DxValueAxis,
-            // DxPane,
-            DxTooltip,
-            DxTitle,
-            DxCrosshair,
-            DxFont,
-            DxPoint,
-            DxPointHoverStyle,
-            DxExport,
-            // DxPointBorder,
-        },
-        data() {
-            return {
-                dataArray: [],
-                seriesArray: [
-                    {
-                        valueField: 'incoming',
-                        name: 'Входящий',
-                        color: '#97c95c',
-                    },
-                    {
-                        valueField: 'outcoming',
-                        name: 'Исходящий',
-                        color: '#1db2f5',
-                    },
-                    // { valueField: 'Не определен', name: 'Не определен', color: '#bbb' },
-                    {
-                        valueField: 'failed',
-                        name: 'Недозвон',
-                        color: '#f57f21',
-                    },
-                    {
-                        valueField: 'missed',
-                        name: 'Пропущенный',
-                        color: '#f5564a',
-                    },
-                ],
-                tooltipColors: {
-                    Входящий: '#97c95c',
-                    Исходящий: '#1db2f5',
-                    Недозвон: '#f57f21',
-                    Пропущенный: '#f5564a',
+    },
+    data() {
+        return {
+            dataArray: [],
+            seriesArray: [
+                {
+                    valueField: 'incoming',
+                    name: 'Входящий',
+                    color: '#97c95c',
                 },
-            };
-        },
-        props: [
-            'dataSourceUrl',
-        ],
-        created() {
-            loadMessages(ruMessages);
-            locale('ru');
-            moment.locale('ru');
-        },
-        methods: {
-            customizeTooltip(pointInfo) {
-                console.log(pointInfo);
-                const drawSingleElement = (name, val, percent) => `
+                {
+                    valueField: 'outcoming',
+                    name: 'Исходящий',
+                    color: '#1db2f5',
+                },
+                // { valueField: 'Не определен', name: 'Не определен', color: '#bbb' },
+                {
+                    valueField: 'failed',
+                    name: 'Недозвон',
+                    color: '#f57f21',
+                },
+                {
+                    valueField: 'missed',
+                    name: 'Пропущенный',
+                    color: '#f5564a',
+                },
+            ],
+            tooltipColors: {
+                Входящий: '#97c95c',
+                Исходящий: '#1db2f5',
+                Недозвон: '#f57f21',
+                Пропущенный: '#f5564a',
+            },
+        };
+    },
+    props: [
+        'dataSourceUrl',
+    ],
+    created() {
+        loadMessages(ruMessages);
+        locale('ru');
+        moment.locale('ru');
+    },
+    methods: {
+        customizeTooltip(pointInfo) {
+            console.log(pointInfo);
+            const drawSingleElement = (name, val, percent) => `
           <div class='series-name'>
             <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;${name}:
           </div>
@@ -194,12 +194,12 @@
           </div>
         `;
                 // eslint-disable-next-line no-unused-vars,no-return-assign
-                const html = pointInfo.points.reduce((ac, el) =>
-                        // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
-                        ac += drawSingleElement(el.seriesName, el.valueText, el.percentText),
-                    '');
-                return {
-                    html: `
+            const html = pointInfo.points.reduce((ac, el) =>
+            // eslint-disable-next-line no-return-assign,no-param-reassign,implicit-arrow-linebreak
+                ac += drawSingleElement(el.seriesName, el.valueText, el.percentText),
+            '');
+            return {
+                html: `
             <div>
               <div class='tooltip-header'>
                 ${moment(pointInfo.argumentText, 'DD-MM-YYYY').locale('ru').format('LL')}
@@ -209,13 +209,13 @@
               </div>
             </div>
           </div>`,
-                };
-            },
-            custimizeTitleThousands({ valueText }) {
-                return `${numberWithCommas(Math.round(valueText / 1000))} к`;
-            },
+            };
         },
-    };
+        custimizeTitleThousands({ valueText }) {
+            return `${numberWithCommas(Math.round(valueText / 1000))} к`;
+        },
+    },
+};
 </script>
 
 <style lang="css">

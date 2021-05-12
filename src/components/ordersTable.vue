@@ -61,7 +61,7 @@
       />
       <DxColumn
         data-field="created_time"
-        caption="День"
+        caption="Время"
         sort-order="desc"
       />
       <DxColumn

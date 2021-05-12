@@ -18,6 +18,7 @@
                 Динамика продаж</b-nav-item>
 <!--        <b-nav-item to="/TextManipulate" exact exact-active-class="active">Текст</b-nav-item>-->
             <b-nav-item to="/calls" exact exact-active-class="active">Коллцентр</b-nav-item>
+            <b-nav-item to="/buyer" exact exact-active-class="active">Байер</b-nav-item>
             <b-nav-item to="/monitoring" exact exact-active-class="active">Мониторинг</b-nav-item>
             <b-nav-item to="/expenses" exact exact-active-class="active">Расход</b-nav-item>
             <b-nav-item to="/callsMonitoring" exact exact-active-class="active">
