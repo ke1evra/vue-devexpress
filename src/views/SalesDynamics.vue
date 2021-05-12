@@ -33,30 +33,6 @@
                     <orders-by-month v-bind:dataSource="last365DaysData"></orders-by-month>
                 </div>
             </div>
-            <!--            <div class="row">-->
-            <!--                <div class="col">-->
-            <!--                    <h5>Последние 365 дней</h5>-->
-            <!--                    <orders-by-month v-bind:dataSource="last365DaysData"></orders-by-month>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col">-->
-            <!--                    <h5>Последние 30 дней</h5>-->
-            <!--                    <orders-by-days v-bind:dataSource="last30DaysData"></orders-by-days>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col">-->
-            <!--                    <h5>Последние 7 дней</h5>-->
-            <!--                    <orders-by-days v-bind:dataSource="last7DaysData"></orders-by-days>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div class="row">-->
-            <!--                <div class="col">-->
-            <!--                    <h5>Последние 24 часа</h5>-->
-            <!--                    <orders-by-hours v-bind:dataSource="todayData"></orders-by-hours>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </div>
 </template>
@@ -94,7 +70,7 @@
     const getOrderByHourData = async (from, to, type, shop) => getGroupedOrderDataFromECcrm(from, to, type, shop, 'hour');
 
     export default {
-        name: 'test',
+        name: 'salesDynamics',
         components: {
             // SimpleDataGrid,
             OrdersByDays,
