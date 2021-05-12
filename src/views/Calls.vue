@@ -31,6 +31,7 @@ import axios from 'axios';
 import DualDatePicker from '../components/dualDatePicker.vue';
 import callsTable from '../components/callsTable.vue';
 import CallsByDayChart from '../components/callsByDayChart.vue';
+import { API_URL } from '../config';
 
 
 export default {
@@ -58,7 +59,7 @@ export default {
                 });
         },
         getDataSourceUrl(range) {
-            this.dataSourceUrl = `http://185.176.25.157:3000/calls/range/byday?date_from=${moment(`${range.from.slice(2, 4)}-${range.from.slice(0, 2)}-${range.from.slice(4, 8)}`).format('YYYY-MM-DD')}&date_to=${moment(`${range.to.slice(2, 4)}-${range.to.slice(0, 2)}-${range.to.slice(4, 8)}`).format('YYYY-MM-DD')}`;
+            this.dataSourceUrl = `${API_URL}/calls/range/byday?date_from=${moment(`${range.from.slice(2, 4)}-${range.from.slice(0, 2)}-${range.from.slice(4, 8)}`).format('YYYY-MM-DD')}&date_to=${moment(`${range.to.slice(2, 4)}-${range.to.slice(0, 2)}-${range.to.slice(4, 8)}`).format('YYYY-MM-DD')}`;
         },
     },
 };

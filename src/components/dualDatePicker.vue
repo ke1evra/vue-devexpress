@@ -46,6 +46,7 @@
 <script>
 import { TheMask } from 'vue-the-mask';
 import moment from 'moment';
+import { API_URL } from '../config';
 
 export default {
     name: 'dualDatePicker',
@@ -56,7 +57,7 @@ export default {
     data() {
         return {
             dataUrl: null,
-            dataUrlTemp: 'http://185.176.25.157:3000/orders?date_from=2020-01-03 00:00:00&date_to=2020-01-03 23:59:59',
+            dataUrlTemp: `${API_URL}/orders?date_from=2020-01-03 00:00:00&date_to=2020-01-03 23:59:59`,
             autoExpandAll: true,
             fromDate: moment().format('DDMMYYYY'),
             toDate: moment().format('DDMMYYYY'),
@@ -160,7 +161,7 @@ export default {
     methods: {
         setUrl() {
             // eslint-disable-next-line no-return-assign
-            return this.dataUrl = `http://185.176.25.157:3000/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+            return this.dataUrl = `${API_URL}/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
         },
         setDateRange(value) {
             // eslint-disable-next-line no-return-assign
@@ -168,7 +169,7 @@ export default {
             this.toDate = value.to;
         },
         returnDateRange() {
-            const url = (uri = 'orders') => `http://185.176.25.157:3000/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+            const url = (uri = 'orders') => `${API_URL}/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
             if (this.urltype === 'calls') {
                 this.$emit('change', url('calls/range'));
                 console.log(url('calls/range'));

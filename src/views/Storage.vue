@@ -34,10 +34,11 @@
 import calendar from '../components/calendar.vue';
 import timelineChart from '../components/charts/timelineChart.vue';
 import fetchData from '../components/model/common';
+import { API_URL } from '../config';
 
 const moment = require('moment');
 
-const API_URI = 'http://185.176.25.157:3000/wh/person';
+const API_URI = `${API_URL}/wh/person`;
 const timeFormat = 'YYYY-MM-DD HH:mm:ss';
 
 export default {

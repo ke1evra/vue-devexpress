@@ -29,6 +29,7 @@
 import moment from 'moment';
 import axios from 'axios';
 import DualDatePicker from '../components/dualDatePicker.vue';
+import { API_URL } from '../config';
 
 export default {
     name: 'Monitoring',
@@ -51,7 +52,7 @@ export default {
         },
         getOrdersSumData() {
             const formatDate = date => moment.unix(date).format('YYYY-MM-DD HH:mm:ss');
-            const url = `http://185.176.25.157:3000/orders/sum?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}`;
+            const url = `${API_URL}/orders/sum?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}`;
             console.log(url);
             axios
                 .get(url)

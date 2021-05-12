@@ -32,6 +32,7 @@ import moment from 'moment';
 import DualDatePicker from '../components/dualDatePicker.vue';
 import orderSourcesChartByDay from '../components/orderSourcesChartByDay.vue';
 import expensesByDayChart from '../components/expensesByDayChart.vue';
+import { API_URL } from '../config';
 
 export default {
     name: 'Expenses',
@@ -75,11 +76,11 @@ export default {
         },
         constructLink(shop) {
             const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
-            return `http://185.176.25.157:3000/expenses/order_source?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
+            return `${API_URL}/expenses/order_source?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
         },
         constructCostLink(shop) {
             const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
-            return `http://185.176.25.157:3000/expenses/cost?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
+            return `${API_URL}/expenses/cost?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
         },
     },
 };

@@ -41,11 +41,12 @@ import calendar from '../components/calendar.vue';
 import timelineChart from '../components/charts/timelineChart.vue';
 import missedCalls from '../components/missedCallsHistory.vue';
 import fetchData from '../components/model/common';
+import { API_URL } from '../config';
 
 const moment = require('moment');
 const nameNumberAccordance = require('../data/vks_numbers.js');
 
-const API_URI = 'http://185.176.25.157:3000/mango/day';
+const API_URI = `${API_URL}/mango/day`;
 
 export default {
     name: 'callsMonitoring',
