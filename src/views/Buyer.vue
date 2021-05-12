@@ -4,35 +4,24 @@
             <div class="col">
                 <h1>Байер</h1>
                 <dual-date-picker @change="getData" v-bind:loading="loading"></dual-date-picker>
-                <orders-table v-bind:dataSource="dataSource" ></orders-table>
+                <buyers-table v-bind:dataSource="dataSource" ></buyers-table>
             </div>
         </div>
     </div>
 </template>
 <script>
 import axios from 'axios';
-import OrdersTable from '../components/ordersTable.vue';
+import BuyersTable from '../components/buyersTable.vue';
 import DualDatePicker from '../components/dualDatePicker.vue';
+import { API_URL } from '../config';
 
 
 export default {
-    components: { DualDatePicker, OrdersTable },
-    data() {
-        return {
-            dataSource: null,
-            url: null,
-            loading: null,
-        };
-    },
+    components: { DualDatePicker, BuyersTable },
     methods: {
-        getData(url) {
-            axios
-                .get(url)
-            // eslint-disable-next-line no-return-assign
-                .then((response) => {
-                    this.loading = false;
-                    this.dataSource = response.data;
-                });
+        getData() {
+            const url = `${API_URL}/reports/buyer?date_from=${from}&date_to=${to}`;
+            this.dataSource = axios.get(url).then(data => data).catch(e => console.log(e));
         },
     },
 };

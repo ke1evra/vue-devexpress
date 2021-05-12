@@ -160,7 +160,7 @@ export default {
     },
     methods: {
         setUrl() {
-            // eslint-disable-next-line no-return-assign
+            // eslint-disable-next-line no-return-assign,max-len
             return this.dataUrl = `${API_URL}/orders?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
         },
         setDateRange(value) {
@@ -169,6 +169,7 @@ export default {
             this.toDate = value.to;
         },
         returnDateRange() {
+            // eslint-disable-next-line max-len
             const url = (uri = 'orders') => `${API_URL}/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
             if (this.urltype === 'calls') {
                 this.$emit('change', url('calls/range'));
