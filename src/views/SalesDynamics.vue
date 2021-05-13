@@ -10,7 +10,7 @@
                             v-model="type"
                             :options="options"
                             class="mr-3"
-                            @change="onChange"
+                            @range="onRange"
                         ></b-form-select>
                     </b-form>
                 </div>
@@ -128,7 +128,7 @@ export default {
         showTime() {
             return moment().format('YYYY-MM-DD HH:mm:ss');
         },
-        onChange(value) {
+        onRange(value) {
             console.log(value);
             this.renderGraphics();
         },

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col">
                 <h1>Байер</h1>
-                <dual-date-picker @change="getData" v-bind:loading="loading"></dual-date-picker>
+                <dual-date-picker @range="getData" v-bind:loading="loading"></dual-date-picker>
                 <buyers-table v-bind:dataSource="dataSource" ></buyers-table>
             </div>
         </div>
@@ -18,9 +18,16 @@ import { API_URL } from '../config';
 
 export default {
     components: { DualDatePicker, BuyersTable },
+    data() {
+        return {
+            dataSource: null,
+            url: null,
+            loading: null,
+        };
+    },
     methods: {
-        getData() {
-            const url = `${API_URL}/reports/buyer?date_from=${from}&date_to=${to}`;
+        getData(range) {
+            const url = `${API_URL}/reports/buyer?date_from=${range.from}&date_to=${range.to}`;
             this.dataSource = axios.get(url).then(data => data).catch(e => console.log(e));
         },
     },
