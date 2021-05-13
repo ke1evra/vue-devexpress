@@ -27,64 +27,52 @@
                 placeholder="Search..."
             />
             <DxColumn
-                data-field="order_number"
+                data-field="id"
                 caption="Наш артикул"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
-                data-field="order_number"
+                data-field="shop_sky"
                 caption="Артикул поставщика"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Возрастная группа"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
-                data-field="order_number"
+                data-field="gender"
                 caption="Для кого"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Тип товара"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Категория"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Теги"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Название товара"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Остаток"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Свободный остаток"
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Итого, шт."
-                cell-template="cellTemplateOrderNumber"
             />
             <DxColumn
                 data-field="order_number"
                 caption="Итого, руб."
-                cell-template="cellTemplateOrderNumber"
             />
         </DxDataGrid>
     </div>

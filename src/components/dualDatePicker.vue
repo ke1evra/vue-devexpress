@@ -170,7 +170,7 @@ export default {
         },
         returnDateRange() {
             // eslint-disable-next-line max-len
-            /*const url = (uri = 'orders') => `${API_URL}/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+            /* const url = (uri = 'orders') => `${API_URL}/${uri}?date_from=${moment(`${this.fromDate.slice(2, 4)}-${this.fromDate.slice(0, 2)}-${this.fromDate.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${this.toDate.slice(2, 4)}-${this.toDate.slice(0, 2)}-${this.toDate.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
             if (this.urltype === 'calls') {
                 this.$emit('change', url('calls/range'));
                 console.log(url('calls/range'));
@@ -179,8 +179,8 @@ export default {
             }
              */
             this.$emit('range', {
-                from: this.fromDate,
-                to: this.toDate,
+                from: moment(this.fromDate, 'DDMMYYYY').format('YYYY-MM-DD'),
+                to: moment(this.toDate, 'DDMMYYYY').format('YYYY-MM-DD'),
             });
         },
     },

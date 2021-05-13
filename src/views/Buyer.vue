@@ -28,7 +28,9 @@ export default {
     methods: {
         getData(range) {
             const url = `${API_URL}/reports/buyer?date_from=${range.from}&date_to=${range.to}`;
-            this.dataSource = axios.get(url).then(data => data).catch(e => console.log(e));
+            console.log(url);
+            console.log(axios.get(url).then(data => data).catch(e => console.log(e)));
+            // this.dataSource = axios.get(url).then(data => data).catch(e => console.log(e));
         },
     },
 };
