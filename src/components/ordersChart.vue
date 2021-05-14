@@ -10,10 +10,10 @@
         :allow-export-selected-data="true"
       />
       <DxCommonSeriesSettings
-        max-label-count="50"
+          :max-label-count="50"
       >
         <DxLabel
-          visible="true"
+          :visible="true"
           alignment="center"
           position="inside"
           overlapping-behavior="none"
@@ -23,7 +23,7 @@
         <DxPoint :visible="false">
           <DxPointHoverStyle
             visible="true"
-            size="10"
+            :size="10"
           />
         </DxPoint>
       </DxCommonSeriesSettings>
@@ -50,7 +50,7 @@
         value-field="count"
         type="bar"
         color="#03beca"
-        name="Кол-во звявок"
+        name="Кол-во заявок"
         axis="count"
         pane="bottomPane"
       >
@@ -252,7 +252,7 @@ export default {
             }, []);
         },
         calcData() {
-            console.log(this.dataSource.length);
+            // console.log(this.dataSource.length);
             const calculatedData = this.dataSource.reduce(
                 (acum, item) => {
                     if (item.otkaz_cause_id !== 8 && item.otkaz_cause_id !== 3 && item.shop_title === 'Вкостюме.ру') {

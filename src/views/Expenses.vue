@@ -4,22 +4,30 @@
       <div class="row">
         <div class="col">
           <h1>Расход</h1>
-          <dual-date-picker @range="setRange"
-                            v-bind:from="from"
-                            v-bind:to="to"
+            <label>Магазин</label>
+            <b-form inline>
+                <b-form-select
+                    size="sm"
+                    v-model="shop"
+                    class="mb-1"
+                    :options="options"
+                ></b-form-select>
+            </b-form>
+          <dual-date-picker @range="getData"
+                            v-bind:loading="loading"
           ></dual-date-picker>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <h3>Расходы по источникам по дням</h3>
+          <h3>Стоимость</h3>
           <expenses-by-day-chart
-            v-bind:dataSourceUrl="constructCostLink('vkostume')"
+            v-bind:dataSourceUrl="cost"
           >
           </expenses-by-day-chart>
-          <h3>Распределение заказов по источникам</h3>
+          <h3>Источники</h3>
           <order-sources-chart-by-day
-            v-bind:dataSourceUrl="constructLink('vkostume')">
+            v-bind:dataSourceUrl="source">
           </order-sources-chart-by-day>
         </div>
       </div>
@@ -27,8 +35,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
-// import axios from 'axios';
+import axios from 'axios';
 import DualDatePicker from '../components/dualDatePicker.vue';
 import orderSourcesChartByDay from '../components/orderSourcesChartByDay.vue';
 import expensesByDayChart from '../components/expensesByDayChart.vue';
@@ -41,9 +48,10 @@ export default {
         return {
             dataSource: null,
             dataUrl: null,
-            from: null,
-            to: null,
-            vksLink: null,
+            loading: null,
+            cost: null,
+            source: null,
+            shop: 'vkostume',
             options: [
                 {
                     value: 'vkostume',
@@ -68,19 +76,35 @@ export default {
     created() {
     },
     methods: {
-        setRange(range) {
-            this.from = moment(range.from, 'DDMMYYYY').unix();
-            this.to = moment(range.to, 'DDMMYYYY').endOf('day').unix();
-            // this.getOrdersSumData();
-            this.vksLink = this.constructLink('vkostume');
+        async getData(range) {
+            this.constructCostLink(range);
+            this.constructLink(range);
         },
-        constructLink(shop) {
-            const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
-            return `${API_URL}/expenses/order_source?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
+        constructCostLink(range) {
+            this.loading = true;
+            // eslint-disable-next-line max-len
+            const constructCostUrl = `${API_URL}/expenses/cost?date_from=${range.from}&date_to=${range.to}&shop=${this.shop}`;
+            console.log(constructCostUrl);
+            axios
+                .get(constructCostUrl)
+                // eslint-disable-next-line no-return-assign
+                .then((response) => {
+                    this.cost = response.data;
+                    this.loading = false;
+                });
         },
-        constructCostLink(shop) {
-            const formatDate = date => moment.unix(date).format('YYYY-MM-DD');
-            return `${API_URL}/expenses/cost?date_from=${formatDate(this.from)}&date_to=${formatDate(this.to)}&shop=${shop}`;
+        constructLink(range) {
+            this.loading = true;
+            // eslint-disable-next-line max-len
+            const constructUrl = `${API_URL}/expenses/order_source?date_from=${range.from}&date_to=${range.to}&shop=${this.shop}`;
+            console.log(constructUrl);
+            axios
+                .get(constructUrl)
+                // eslint-disable-next-line no-return-assign
+                .then((response) => {
+                    this.source = response.data;
+                    this.loading = false;
+                });
         },
     },
 };

@@ -28,51 +28,115 @@
             />
             <DxColumn
                 data-field="id"
-                caption="Наш артикул"
+                caption="id"
             />
             <DxColumn
                 data-field="shop_sky"
-                caption="Артикул поставщика"
+                caption="shop_sky"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Возрастная группа"
+                data-field="supplier_sky"
+                caption="supplier_sky"
+            />
+            <DxColumn
+                data-field="manufacture_sky"
+                caption="manufacture_sky"
+            />
+            <DxColumn
+                data-field="shop"
+                caption="shop"
+            />
+            <DxColumn
+                data-field="brand"
+                caption="brand"
+            />
+            <DxColumn
+                data-field="age_group"
+                caption="age_group"
             />
             <DxColumn
                 data-field="gender"
-                caption="Для кого"
+                caption="gender"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Тип товара"
+                data-field="item_kind"
+                caption="item_kind"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Категория"
+                data-field="title"
+                caption="title"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Теги"
+                data-field="tags"
+                caption="tags"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Название товара"
+                data-field="currient_quantity"
+                caption="currient_quantity"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Остаток"
+                data-field="free_quantity"
+                caption="free_quantity"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Свободный остаток"
+                data-field="slug"
+                caption="slug"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Итого, шт."
+                data-field="created_at"
+                caption="created_at"
             />
             <DxColumn
-                data-field="order_number"
-                caption="Итого, руб."
+                data-field="ordered_at"
+                caption="ordered_at"
+            />
+            <DxColumn
+                data-field="last_supply_at"
+                caption="last_supply_at"
+            />
+            <DxColumn
+                data-field="invoice"
+                caption="invoice"
+            />
+            <DxColumn
+                data-field="sebestoimost"
+                caption="sebestoimost"
+            />
+            <DxColumn
+                data-field="opt_price"
+                caption="opt_price"
+            />
+            <DxColumn
+                data-field="old_price"
+                caption="old_price"
+            />
+            <DxColumn
+                data-field="max_price"
+                caption="max_price"
+            />
+            <DxColumn
+                data-field="wholesale_price"
+                caption="wholesale_price"
+            />
+            <DxColumn
+                data-field="prime_cost_currency"
+                caption="prime_cost_currency"
+            />
+            <DxColumn
+                data-field="avg_discount"
+                caption="avg_discount"
+            />
+            <DxColumn
+                data-field="sum_discount"
+                caption="sum_discount"
+            />
+            <DxColumn
+                data-field="sum_price"
+                caption="sum_price"
+            />
+            <DxColumn
+                data-field="cnt_sold"
+                caption="cnt_sold"
             />
         </DxDataGrid>
     </div>

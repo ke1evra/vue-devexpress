@@ -6,8 +6,6 @@
         <dual-date-picker @range="getData"
                           v-bind:loading="loading"
                           v-bind:urltype="urltype"
-                          v-bind:from="from"
-                          v-bind:to="to"
         ></dual-date-picker>
       </div>
     </div>
@@ -25,7 +23,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import axios from 'axios';
 import DualDatePicker from '../components/dualDatePicker.vue';
 import callsTable from '../components/callsTable.vue';
@@ -41,18 +38,14 @@ export default {
             dataSource: null,
             loading: null,
             urltype: 'calls',
-            from: null,
-            to: null,
             dataSourceUrl: null,
         };
     },
     methods: {
         getData(range) {
             this.loading = true;
-            //getting data source url
-            this.dataSourceUrl = `${API_URL}/calls/range/byday?date_from=${moment(`${range.from.slice(2, 4)}-${range.from.slice(0, 2)}-${range.from.slice(4, 8)}`).format('YYYY-MM-DD')}&date_to=${moment(`${range.to.slice(2, 4)}-${range.to.slice(0, 2)}-${range.to.slice(4, 8)}`).format('YYYY-MM-DD')}`;
-            //getting url to get data
-            const url = `${API_URL}/calls/range?date_from=${moment(`${range.from.slice(2, 4)}-${range.from.slice(0, 2)}-${range.from.slice(4, 8)}`).format('YYYY-MM-DD')} 00:00:00&date_to=${moment(`${range.to.slice(2, 4)}-${range.to.slice(0, 2)}-${range.to.slice(4, 8)}`).format('YYYY-MM-DD')} 23:59:59`;
+            this.dataSourceUrl = `${API_URL}/calls/range/byday?date_from=${range.from}&date_to=${range.to}`;
+            const url = `${API_URL}/calls/range?date_from=${range.from} 00:00:00&date_to=${range.to} 23:59:59`;
             axios
                 .get(url)
             // eslint-disable-next-line no-return-assign
@@ -61,11 +54,6 @@ export default {
                     this.dataSource = response.data;
                 });
         },
-        /*
-        getDataSourceUrl(range) {
-            this.dataSourceUrl = `${API_URL}/calls/range/byday?date_from=${moment(`${range.from.slice(2, 4)}-${range.from.slice(0, 2)}-${range.from.slice(4, 8)}`).format('YYYY-MM-DD')}&date_to=${moment(`${range.to.slice(2, 4)}-${range.to.slice(0, 2)}-${range.to.slice(4, 8)}`).format('YYYY-MM-DD')}`;
-        },
-         */
     },
 };
 </script>

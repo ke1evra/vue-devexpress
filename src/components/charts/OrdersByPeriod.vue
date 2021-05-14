@@ -29,7 +29,7 @@
                         :max-label-count="0"
                     >
                         <DxLabel
-                            visible="false"
+                            :visible="false"
                             alignment="center"
                             position="inside"
                             background-color="none"
@@ -39,7 +39,7 @@
                         <DxPoint :visible="false">
                             <DxPointHoverStyle
                                 visible="false"
-                                size="10"
+                                :size="10"
                             />
                         </DxPoint>
                     </DxCommonSeriesSettings>

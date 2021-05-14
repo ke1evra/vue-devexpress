@@ -34,7 +34,7 @@
             :max-label-count="50"
           >
             <DxLabel
-              visible="true"
+              :visible="true"
               alignment="center"
               position="inside"
               overlapping-behavior="none"
@@ -44,8 +44,8 @@
             </DxLabel>
             <DxPoint :visible="false">
               <DxPointHoverStyle
-                visible="false"
-                size="10"
+                :visible="false"
+                :size="10"
               />
             </DxPoint>
           </DxCommonSeriesSettings>

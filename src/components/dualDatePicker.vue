@@ -2,7 +2,12 @@
   <div class="dualDatePicker">
     <div class="row pb-1">
       <div class="col-md-2">
-        <b-form-select v-model="selected" :options="options" @change="setDateRange(selected)">
+        <b-form-select
+            v-model="selected"
+            :options="options"
+            @change="setDateRange(selected)"
+            style="width: 245px;"
+        >
         </b-form-select>
       </div>
     </div>

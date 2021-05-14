@@ -27,10 +27,14 @@ export default {
     },
     methods: {
         getData(range) {
+            this.loading = true;
             const url = `${API_URL}/reports/buyer?date_from=${range.from}&date_to=${range.to}`;
-            console.log(url);
-            console.log(axios.get(url).then(data => data).catch(e => console.log(e)));
-            // this.dataSource = axios.get(url).then(data => data).catch(e => console.log(e));
+            // console.log(url);
+            // eslint-disable-next-line no-return-assign
+            axios.get(url).then((response) => {
+                this.loading = false;
+                this.dataSource = response.data;
+            }).catch(e => console.log(e));
         },
     },
 };

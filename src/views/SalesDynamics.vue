@@ -10,7 +10,7 @@
                             v-model="type"
                             :options="options"
                             class="mr-3"
-                            @range="onRange"
+                            @change="onRange"
                         ></b-form-select>
                     </b-form>
                 </div>
@@ -61,7 +61,7 @@ function DateRange(from = moment().startOf('day').toDate(), to = moment().endOf(
 
 const getGroupedOrderDataFromECcrm = async (from, to, type, shop, groupBy) => {
     const url = `${API_URL}/orders/${groupBy}/${type}?date_from=${from}&date_to=${to}&shop=${shop}`;
-    console.log(`url: ${url}`);
+    // console.log(`url: ${url}`);
     return axios.get(url).then(data => data).catch(e => console.log(e));
 };
 
@@ -128,8 +128,7 @@ export default {
         showTime() {
             return moment().format('YYYY-MM-DD HH:mm:ss');
         },
-        onRange(value) {
-            console.log(value);
+        onRange() {
             this.renderGraphics();
         },
         setRange(range, from, to) {

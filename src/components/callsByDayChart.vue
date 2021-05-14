@@ -1,6 +1,5 @@
 <template>
   <div class="pt-3">
-    <fa :icon="faFlag"/>
     <DxChart
       id="callsChart"
       :data-source="dataSourceUrl"
@@ -11,7 +10,7 @@
         :allow-export-selected-data="true"
       />
       <DxCommonSeriesSettings
-        max-label-count="50"
+        :max-label-count="50"
       >
         <DxLabel
           visible="true"
@@ -188,10 +187,14 @@ export default {
             console.log(pointInfo);
             const drawSingleElement = (name, val, percent) => `
           <div class='series-name'>
-            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>&#9632;</span>&nbsp;${name}:
+            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>
+            &#9632;
+            </span>&nbsp;${name}:
           </div>
           <div class='value-text'>
-            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>${numberWithCommas(val)}${percent ? `&nbsp<i >(${percent})</i>` : ''}</span>
+            <span ${this.tooltipColors[name] ? `style="color:${this.tooltipColors[name]}"` : ''}>
+            ${numberWithCommas(val)}${percent ? `&nbsp<i >(${percent})</i>` : ''}
+            </span>
           </div>
         `;
             // eslint-disable-next-line no-unused-vars,no-return-assign
