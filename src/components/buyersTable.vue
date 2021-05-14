@@ -27,92 +27,88 @@
                 placeholder="Search..."
             />
             <DxColumn
-                data-field="id"
-                caption="id"
-            />
-            <DxColumn
                 data-field="shop_sky"
-                caption="shop_sky"
+                caption="Артикул магазина"
             />
             <DxColumn
                 data-field="supplier_sky"
-                caption="supplier_sky"
+                caption="Артикул поставщика"
             />
             <DxColumn
                 data-field="manufacture_sky"
-                caption="manufacture_sky"
+                caption="Артикул производителя"
             />
             <DxColumn
                 data-field="shop"
-                caption="shop"
+                caption="Магазин"
             />
             <DxColumn
                 data-field="brand"
-                caption="brand"
+                caption="Бренд"
             />
             <DxColumn
                 data-field="age_group"
-                caption="age_group"
+                caption="Возрастная группа"
             />
             <DxColumn
                 data-field="gender"
-                caption="gender"
+                caption="Для кого"
             />
             <DxColumn
                 data-field="item_kind"
-                caption="item_kind"
+                caption="Категория товара"
             />
             <DxColumn
                 data-field="title"
-                caption="title"
+                caption="Название товара"
             />
             <DxColumn
                 data-field="tags"
-                caption="tags"
+                caption="Теги"
             />
             <DxColumn
                 data-field="currient_quantity"
-                caption="currient_quantity"
+                caption="Текущий остаток"
             />
             <DxColumn
                 data-field="free_quantity"
-                caption="free_quantity"
+                caption="Свободный остаток"
             />
             <DxColumn
                 data-field="slug"
-                caption="slug"
+                caption="Для построения ссылки"
             />
             <DxColumn
                 data-field="created_at"
-                caption="created_at"
+                caption="Дата добавления на сайт"
             />
             <DxColumn
                 data-field="ordered_at"
-                caption="ordered_at"
+                caption="Дата заказа"
             />
             <DxColumn
                 data-field="last_supply_at"
-                caption="last_supply_at"
+                caption="Дата последнего поступления"
             />
             <DxColumn
                 data-field="invoice"
-                caption="invoice"
+                caption="Инвойс"
             />
             <DxColumn
                 data-field="sebestoimost"
-                caption="sebestoimost"
+                caption="Себестоимость"
             />
             <DxColumn
                 data-field="opt_price"
-                caption="opt_price"
+                caption="Оптовая цена"
             />
             <DxColumn
                 data-field="old_price"
-                caption="old_price"
+                caption="Розничная цена (старая цена)"
             />
             <DxColumn
                 data-field="max_price"
-                caption="max_price"
+                caption="Максимальная цена"
             />
             <DxColumn
                 data-field="wholesale_price"
@@ -120,23 +116,23 @@
             />
             <DxColumn
                 data-field="prime_cost_currency"
-                caption="prime_cost_currency"
+                caption="Себестоимость в валюте"
             />
             <DxColumn
                 data-field="avg_discount"
-                caption="avg_discount"
+                caption="Средняя скидка"
             />
             <DxColumn
                 data-field="sum_discount"
-                caption="sum_discount"
+                caption="Суммарная скидка"
             />
             <DxColumn
                 data-field="sum_price"
-                caption="sum_price"
+                caption="Суммарная стоимость"
             />
             <DxColumn
                 data-field="cnt_sold"
-                caption="cnt_sold"
+                caption="Продано, ШТ"
             />
         </DxDataGrid>
     </div>
