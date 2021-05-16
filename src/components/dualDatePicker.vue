@@ -6,7 +6,7 @@
             v-model="selected"
             :options="options"
             @change="setDateRange(selected)"
-            style="width: 245px;"
+            style="width: 244px;"
         >
         </b-form-select>
       </div>

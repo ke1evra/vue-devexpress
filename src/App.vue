@@ -24,6 +24,7 @@
             <b-nav-item to="/callsMonitoring" exact exact-active-class="active">
                 Мониторинг звонков</b-nav-item>
             <b-nav-item to="/storage" exact exact-active-class="active">Storage</b-nav-item>
+            <b-nav-item to="/ordersInfo" exact exact-active-class="active">Инфа по заказам</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
