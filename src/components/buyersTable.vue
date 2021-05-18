@@ -118,22 +118,16 @@
                 data-field="prime_cost_currency"
                 caption="Себестоимость в валюте"
             />
-            <DxColumn
-                data-field="avg_discount"
-                caption="Средняя скидка"
-            />
-            <DxColumn
-                data-field="sum_discount"
-                caption="Суммарная скидка"
-            />
-            <DxColumn
-                data-field="sum_price"
-                caption="Суммарная стоимость"
-            />
-            <DxColumn
-                data-field="cnt_sold"
-                caption="Продано, ШТ"
-            />
+            <DxColumn v-for="(value, name) in dateCols" :key="value"
+                      v-bind:value="value"
+                      v-bind:name="name"
+            >
+                <DxColumn
+                    data-field="value"
+                    caption="name"
+                />
+            </DxColumn>
+
         </DxDataGrid>
     </div>
 </template>
