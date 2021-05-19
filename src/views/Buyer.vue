@@ -6,7 +6,6 @@
                 <dual-date-picker @range="getData" v-bind:loading="loading"></dual-date-picker>
                 <buyers-table v-bind:dataSource="dataSource"
                               v-bind:dates="dates"
-                              v-bind:dateCols="dateCols"
                 ></buyers-table>
             </div>
         </div>
@@ -40,18 +39,12 @@ export default {
             axios.get(url).then((response) => {
                 this.loading = false;
                 const dates = [];
-                const dateCols = [];
                 while (range.from <= range.to) {
                     dates.push(range.from);
-                    dateCols.push(`${range.from} cnt_sold`);
-                    dateCols.push(`${range.from} sum_price`);
-                    dateCols.push(`${range.from} sum_discount`);
-                    dateCols.push(`${range.from} avg_discount`);
                     // eslint-disable-next-line no-param-reassign
                     range.from = moment(range.from).subtract(-1, 'day').format('YYYY-MM-DD');
                 }
                 this.dataSource = this.parseData(response.data);
-                this.dateCols = dateCols;
                 this.dates = dates;
                 console.log(this.dataSource);
             }).catch(e => console.log(e));
@@ -74,12 +67,14 @@ export default {
                 preTableObj[data[i].id].total_sum += data[i].sum_price;
                 preTableObj[data[i].id].total_cnt += data[i].cnt_sold;
                 preTableObj[data[i].id].total_discount += data[i].sum_discount;
-                preTableObj[data[i].id][moment(data[i].ordered_at).format('YYYY-MM-DD cnt_sold')] = data[i].cnt_sold;
-                preTableObj[data[i].id][moment(data[i].ordered_at).format('YYYY-MM-DD sum_price')] = data[i].sum_price;
-                // eslint-disable-next-line
-                preTableObj[data[i].id][moment(data[i].ordered_at).format('YYYY-MM-DD sum_discount')] = data[i].sum_discount;
-                // eslint-disable-next-line
-                preTableObj[data[i].id][moment(data[i].ordered_at).format('YYYY-MM-DD avg_discount')] = data[i].avg_discount;
+                // eslint-disable-next-line max-len
+                preTableObj[data[i].id][`${moment(data[i].ordered_at).format('YYYY-MM-DD')} cnt_sold`] = data[i].cnt_sold;
+                // eslint-disable-next-line max-len
+                preTableObj[data[i].id][`${moment(data[i].ordered_at).format('YYYY-MM-DD')} sum_price`] = data[i].sum_price;
+                // eslint-disable-next-line max-len
+                preTableObj[data[i].id][`${moment(data[i].ordered_at).format('YYYY-MM-DD')} sum_discount`] = data[i].sum_discount;
+                // eslint-disable-next-line max-len
+                preTableObj[data[i].id][`${moment(data[i].ordered_at).format('YYYY-MM-DD')} avg_discount`] = data[i].avg_discount;
             }
             // eslint-disable-next-line
             for (let item in preTableObj) preTableObj[item].avg_sum = preTableObj[item].total_sum / preTableObj[item].total_cnt;

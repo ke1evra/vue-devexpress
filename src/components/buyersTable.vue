@@ -118,14 +118,26 @@
                 data-field="prime_cost_currency"
                 caption="Себестоимость в валюте"
             />
-            <DxColumn v-for="(value, name) in dateCols" :key="value"
+            <DxColumn v-for="value in dates" :key="value"
                       v-bind:value="value"
-                      v-bind:name="name"
                       :visible="false"
+                      :caption="value"
             >
                 <DxColumn
-                    :data-field="name"
-                    :caption="value"
+                    :data-field="value+' cnt_sold'"
+                    caption="Продано, ШТ"
+                />
+                <DxColumn
+                    :data-field="value+' sum_price'"
+                    caption="Суммарная стоимость"
+                />
+                <DxColumn
+                    :data-field="value+' sum_discount'"
+                    caption="Суммарная скидка"
+                />
+                <DxColumn
+                    :data-field="value+' avg_discount'"
+                    caption="Средняя скидка"
                 />
             </DxColumn>
 
@@ -185,7 +197,7 @@ export default {
         locale('ru');
     },
     props: [
-        'dataSource', 'dateCols', 'dates',
+        'dataSource', 'dates',
     ],
     methods: {
         formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
