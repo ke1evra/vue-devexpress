@@ -121,10 +121,11 @@
             <DxColumn v-for="(value, name) in dateCols" :key="value"
                       v-bind:value="value"
                       v-bind:name="name"
+                      :visible="false"
             >
                 <DxColumn
-                    data-field="value"
-                    caption="name"
+                    :data-field="name"
+                    :caption="value"
                 />
             </DxColumn>
 
@@ -184,7 +185,7 @@ export default {
         locale('ru');
     },
     props: [
-        'dataSource',
+        'dataSource', 'dateCols', 'dates',
     ],
     methods: {
         formatSum(x) { return numberWithCommas(x, 'Сумма:'); },
